@@ -11,21 +11,18 @@ export function middleware(req: NextRequest) {
 
   // Agar til mavjud bo'lmasa, default tilga yo'naltiramiz
   if (parts.length === 0 || !locales.includes(parts[0])) {
-    return NextResponse.redirect(new URL(`/uz${pathname}`, req.url));
+    // "/" uchun pathname aynan "/" bo'lgani sababli `/uz${pathname}` ortiqcha
+    // "/uz/" (oxirida slash bilan) hosil qilib, Next.js'ning trailingSlash
+    // normalizatsiyasi bilan qo'shimcha redirect zanjiriga sabab bo'lardi —
+    // ba'zi muhitlarda (masalan Vercel) shu ikkinchi redirect 404 bilan
+    // yakunlanadi. Shuning uchun "/" holatini alohida ishlov beramiz.
+    const target = pathname === "/" ? "/uz" : `/uz${pathname}`;
+    return NextResponse.redirect(new URL(target, req.url));
   }
 
-  // Agar URL til bilan boshlansa, lekin ortiqcha noto'g'ri qism bo'lsa (masalan tilga mos kelmaydigan qism)
-  // parts[0] til, qolganlari sahifa nomi yoki bo'sh bo'lishi kerak
-  const invalidPath = parts.some((part, index) => {
-    if (index === 0) return false; // til
-    return part === ""; // bo'sh string bo'lmasligi kerak, agar bo'sh bo'lsa OK
-  });
-
-  if (invalidPath) {
-    // Noto'g'ri URL bo'lsa, 404 sahifaga yo'naltirish
-    return NextResponse.rewrite(new URL("/404", req.url));
-  }
-
+  // URL til bilan boshlanadi (masalan /uz, /uz/blog) — qolgan segmentlar
+  // mavjud bo'lmagan sahifaga tegishli bo'lsa, Next.js o'zi avtomatik
+  // ravishda app/not-found.tsx orqali 404 ko'rsatadi.
   return NextResponse.next();
 }
 
