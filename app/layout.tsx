@@ -7,6 +7,7 @@ import StyledComponentsRegistry from "@/lib";
 import { ToastContainer } from "react-toastify";
 import { Footer, Header } from "@/app/_components";
 import ChatWidget from "@/app/_components/specific/ChatWidget";
+import SiteViewTracker from "@/app/_components/specific/SiteViewTracker";
 import ThemeProviderWrapper from "@/app/_components/configure/ThemeProvider";
 
 const poppins = Poppins({
@@ -31,6 +32,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
             {children}
             <Footer />
             <ChatWidget />
+            <SiteViewTracker />
             <ToastContainer />
           </ThemeProviderWrapper>
         </StyledComponentsRegistry>
