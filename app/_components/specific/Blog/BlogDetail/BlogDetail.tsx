@@ -19,8 +19,6 @@ import {
   BlogDetailCategory,
   BlogDetailTitle,
   BlogDetailMeta,
-  BlogDetailCover,
-  BlogDetailCoverImage,
   BlogDetailContent,
   BlogDetailRichContent,
   BlogDetailCta,
@@ -136,15 +134,6 @@ const BlogDetail = () => {
             </span>
           </BlogDetailMeta>
         </BlogDetailHeader>
-
-        {post.image && (
-          <BlogDetailCover data-aos="zoom-in">
-            <BlogDetailCoverImage
-              src={resolveBlogImage(post.image)}
-              alt={post.title[language]}
-            />
-          </BlogDetailCover>
-        )}
 
         <BlogDetailContent data-aos="fade-up">
           <BlogDetailRichContent
