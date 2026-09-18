@@ -1,7 +1,6 @@
 import { Language } from "@/app/types";
 
-export const BLOG_API_URL =
-  process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
+export const BLOG_API_URL = "https://api.shamsoquvmarkaz.uz";
 
 export type LangRecord = Record<Language, string>;
 
@@ -42,7 +41,7 @@ export const fetchBlogPosts = async (): Promise<BlogPost[]> => {
 };
 
 export const fetchBlogPostBySlug = async (
-  slug: string
+  slug: string,
 ): Promise<BlogPost | null> => {
   const response = await fetch(`${BLOG_API_URL}/api/posts/${slug}`, {
     cache: "no-store",

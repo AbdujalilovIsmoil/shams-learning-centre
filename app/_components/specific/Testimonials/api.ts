@@ -1,7 +1,6 @@
 import { Language } from "@/app/types";
 
-export const TESTIMONIALS_API_URL =
-  process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
+export const TESTIMONIALS_API_URL = "https://api.shamsoquvmarkaz.uz";
 
 export type LangRecord = Record<Language, string>;
 
@@ -30,7 +29,7 @@ export const fetchTestimonials = async (): Promise<TestimonialItem[]> => {
   try {
     const response = await fetch(
       `${TESTIMONIALS_API_URL}/api/testimonials?published=true`,
-      { cache: "no-store" }
+      { cache: "no-store" },
     );
 
     if (!response.ok) return [];

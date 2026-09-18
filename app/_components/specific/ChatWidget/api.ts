@@ -1,7 +1,6 @@
 import { Language } from "@/app/types";
 
-export const CHAT_API_URL =
-  process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
+export const CHAT_API_URL = "https://api.shamsoquvmarkaz.uz";
 
 export interface ChatMessage {
   role: "user" | "assistant";
@@ -17,7 +16,7 @@ interface ApiEnvelope<T> {
 export const sendChatMessage = async (
   message: string,
   history: ChatMessage[],
-  language: Language
+  language: Language,
 ): Promise<string> => {
   const response = await fetch(`${CHAT_API_URL}/api/chat`, {
     method: "POST",

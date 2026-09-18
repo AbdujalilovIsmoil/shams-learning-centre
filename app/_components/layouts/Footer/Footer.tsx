@@ -127,7 +127,7 @@ const Footer = () => {
     ru: "© 2025 Все права на конфиденциальность защищены",
   };
 
-  const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
+  const API_URL = "https://api.shamsoquvmarkaz.uz";
 
   const value = `
 email: ${inputValues.email}
