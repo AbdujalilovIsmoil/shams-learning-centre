@@ -11,6 +11,7 @@ import {
   Infos,
   Contact,
   AboutUs,
+  BlogHome,
   Questions,
   Directive,
   SuccessFully,
@@ -44,6 +45,7 @@ const Home = () => {
       <AboutUs />
       <Video />
       <Road />
+      <BlogHome />
       <Questions />
       <Testimonials />
       <SuccessFully />

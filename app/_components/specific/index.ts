@@ -4,6 +4,7 @@ import Road from "./Road";
 import Infos from "./Infos";
 import Contact from "./Contact";
 import AboutUs from "./AboutUs";
+import { BlogHome } from "./Blog";
 import Questions from "./Questions";
 import Testimonials from "./Testimonials";
 import SuccessFully from "./SuccessFully";
@@ -18,6 +19,7 @@ export {
   Infos,
   Contact,
   AboutUs,
+  BlogHome,
   GroupCard,
   Questions,
   CourseCard,

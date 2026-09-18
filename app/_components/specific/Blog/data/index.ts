@@ -1,5 +1,145 @@
 import { Language } from "@/app/types";
 
+interface BlogHomeText {
+  badge: string;
+  title: string;
+  subtitle: string;
+  viewAll: string;
+  minRead: string;
+  readMore: string;
+  emptyTitle: string;
+  emptyText: string;
+}
+
+export const blogHomeText: Record<Language, BlogHomeText> = {
+  uz: {
+    badge: "Shams blog",
+    title: "So‘nggi maqolalar",
+    subtitle:
+      "Arab tilini o‘rganish va ta’lim metodlari haqida foydali maslahatlar",
+    viewAll: "Barcha maqolalarni ko‘rish",
+    minRead: "daqiqa o‘qish",
+    readMore: "Batafsil",
+    emptyTitle: "Tez orada yangi maqolalar",
+    emptyText: "Hozircha blog maqolalari qo‘shilmagan, tez orada paydo bo‘ladi",
+  },
+  ru: {
+    badge: "Блог Shams",
+    title: "Последние статьи",
+    subtitle:
+      "Полезные советы об изучении арабского языка и методах обучения",
+    viewAll: "Смотреть все статьи",
+    minRead: "мин. чтения",
+    readMore: "Читать",
+    emptyTitle: "Новые статьи скоро появятся",
+    emptyText: "Пока статей блога нет, но они появятся совсем скоро",
+  },
+  en: {
+    badge: "Shams blog",
+    title: "Latest articles",
+    subtitle: "Helpful tips about learning Arabic and teaching methods",
+    viewAll: "View all articles",
+    minRead: "min read",
+    readMore: "Read more",
+    emptyTitle: "New articles coming soon",
+    emptyText: "There are no blog articles yet, check back soon",
+  },
+  ar: {
+    badge: "مدونة شمس",
+    title: "أحدث المقالات",
+    subtitle: "نصائح مفيدة حول تعلّم اللغة العربية وطرق التدريس",
+    viewAll: "عرض جميع المقالات",
+    minRead: "دقيقة قراءة",
+    readMore: "قراءة",
+    emptyTitle: "مقالات جديدة قريباً",
+    emptyText: "لا توجد مقالات بعد، ترقّب المزيد قريباً",
+  },
+};
+
+interface BlogFilterText {
+  filterLabel: string;
+  categoryLabel: string;
+  categoryAll: string;
+  sortLabel: string;
+  sortNewest: string;
+  sortOldest: string;
+  sortReadShort: string;
+  sortReadLong: string;
+  dateFromLabel: string;
+  dateToLabel: string;
+  reset: string;
+  resultsFound: string;
+  noResults: string;
+  noResultsHint: string;
+}
+
+export const blogFilterText: Record<Language, BlogFilterText> = {
+  uz: {
+    filterLabel: "Filtrlash",
+    categoryLabel: "Kategoriya",
+    categoryAll: "Barcha kategoriyalar",
+    sortLabel: "Saralash",
+    sortNewest: "Avval yangilari",
+    sortOldest: "Avval eskilari",
+    sortReadShort: "O‘qish vaqti: qisqa",
+    sortReadLong: "O‘qish vaqti: uzun",
+    dateFromLabel: "Sanadan",
+    dateToLabel: "Sanagacha",
+    reset: "Tozalash",
+    resultsFound: "ta maqola topildi",
+    noResults: "Hech qanday maqola topilmadi",
+    noResultsHint: "Filtrlarni o‘zgartirib qayta urinib ko‘ring",
+  },
+  ru: {
+    filterLabel: "Фильтр",
+    categoryLabel: "Категория",
+    categoryAll: "Все категории",
+    sortLabel: "Сортировка",
+    sortNewest: "Сначала новые",
+    sortOldest: "Сначала старые",
+    sortReadShort: "Время чтения: короткое",
+    sortReadLong: "Время чтения: долгое",
+    dateFromLabel: "С даты",
+    dateToLabel: "По дату",
+    reset: "Сбросить",
+    resultsFound: "статей найдено",
+    noResults: "Статьи не найдены",
+    noResultsHint: "Попробуйте изменить параметры фильтра",
+  },
+  en: {
+    filterLabel: "Filters",
+    categoryLabel: "Category",
+    categoryAll: "All categories",
+    sortLabel: "Sort by",
+    sortNewest: "Newest first",
+    sortOldest: "Oldest first",
+    sortReadShort: "Read time: short",
+    sortReadLong: "Read time: long",
+    dateFromLabel: "From date",
+    dateToLabel: "To date",
+    reset: "Reset",
+    resultsFound: "articles found",
+    noResults: "No articles found",
+    noResultsHint: "Try adjusting the filters and search again",
+  },
+  ar: {
+    filterLabel: "تصفية",
+    categoryLabel: "الفئة",
+    categoryAll: "جميع الفئات",
+    sortLabel: "ترتيب حسب",
+    sortNewest: "الأحدث أولاً",
+    sortOldest: "الأقدم أولاً",
+    sortReadShort: "وقت القراءة: قصير",
+    sortReadLong: "وقت القراءة: طويل",
+    dateFromLabel: "من تاريخ",
+    dateToLabel: "إلى تاريخ",
+    reset: "إعادة تعيين",
+    resultsFound: "مقالة موجودة",
+    noResults: "لم يتم العثور على مقالات",
+    noResultsHint: "حاول تغيير عوامل التصفية والمحاولة مرة أخرى",
+  },
+};
+
 interface BlogPageText {
   badge: string;
   title: string;
