@@ -1,8 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import { Swiper, SwiperSlide } from "swiper/react";
+import type { Swiper as SwiperInstance } from "swiper";
 import { Autoplay, Navigation, Pagination } from "swiper/modules";
 import { Language } from "@/app/types";
 import { studentsFeedback } from "./data";
@@ -75,18 +76,54 @@ const Testimonials = () => {
   // Uzun fikrlarni "..." bilan kesib tashlash o'rniga — "Batafsil" tugmasi
   // bosilgan fikrlarning id'lari shu yerda saqlanadi va to'liq ko'rsatiladi.
   const [expandedIds, setExpandedIds] = useState<Set<string>>(new Set());
+  const swiperRef = useRef<SwiperInstance | null>(null);
+  const collapseTimers = useRef<Map<string, ReturnType<typeof setTimeout>>>(
+    new Map()
+  );
 
-  const toggleExpanded = (id: string) => {
+  // "Batafsil" bosilganda carousel avtomatik aylanishi 5 soniyaga
+  // to'xtaydi (o'qish tugamasdan slayd almashib ketmasligi uchun), shu
+  // vaqt tugagach fikr yana yopiladi va carousel davom etadi. Foydalanuvchi
+  // o'zi "Yig'ish" bosib yopsa ham xuddi shunday darhol davom etadi.
+  const collapseAndResume = (id: string) => {
     setExpandedIds((prev) => {
+      if (!prev.has(id)) return prev;
       const next = new Set(prev);
-      if (next.has(id)) {
-        next.delete(id);
-      } else {
-        next.add(id);
-      }
+      next.delete(id);
       return next;
     });
+    swiperRef.current?.autoplay?.start();
+    collapseTimers.current.delete(id);
   };
+
+  const toggleExpanded = (id: string) => {
+    const existingTimer = collapseTimers.current.get(id);
+
+    if (existingTimer) {
+      clearTimeout(existingTimer);
+      collapseTimers.current.delete(id);
+      collapseAndResume(id);
+      return;
+    }
+
+    setExpandedIds((prev) => {
+      const next = new Set(prev);
+      next.add(id);
+      return next;
+    });
+    swiperRef.current?.autoplay?.stop();
+
+    const timer = setTimeout(() => collapseAndResume(id), 5000);
+    collapseTimers.current.set(id, timer);
+  };
+
+  useEffect(() => {
+    const timers = collapseTimers.current;
+    return () => {
+      timers.forEach((timer) => clearTimeout(timer));
+      timers.clear();
+    };
+  }, []);
 
   const readMoreLabel: Record<Language, string> = {
     uz: "Batafsil",
@@ -159,6 +196,9 @@ const Testimonials = () => {
                 loop={items.length > 3}
                 key={language}
                 slidesPerView={1}
+                onSwiper={(swiper) => {
+                  swiperRef.current = swiper;
+                }}
                 modules={[Autoplay, Navigation, Pagination]}
                 dir={language === "ar" ? "rtl" : "ltr"}
                 navigation={{

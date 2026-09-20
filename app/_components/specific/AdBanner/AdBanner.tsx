@@ -3,24 +3,26 @@
 import { useEffect, useRef, useState } from "react";
 import {
   AD_BANNER_HEIGHT_EVENT,
-  AdBannerData,
+  AdBannerItem,
   fetchBanner,
   resolveBannerImage,
 } from "./api";
 import { AdBannerImage, AdBannerLink } from "./style";
 
 // Admin panelning "Banner" sahifasida yoqilgan bo'lsa, sayt eng tepasida
-// (Header'dan ham yuqorida) ko'rinadi va bosilganda kiritilgan havolaga olib
-// boradi. Yoqilmagan yoki sozlanmagan bo'lsa hech narsa chizmaydi.
+// (Header'dan ham yuqorida) ko'pi bilan 5 ta rasm navbat bilan (har biri o'z
+// soniyasi bo'yicha) almashib turadi va bosilganda o'sha rasmning havolasiga
+// olib boradi. Yoqilmagan yoki sozlanmagan bo'lsa hech narsa chizmaydi.
 const AdBanner = () => {
-  const [banner, setBanner] = useState<AdBannerData | null>(null);
+  const [items, setItems] = useState<AdBannerItem[]>([]);
+  const [activeIndex, setActiveIndex] = useState(0);
   const linkRef = useRef<HTMLAnchorElement>(null);
 
   useEffect(() => {
     let active = true;
 
     fetchBanner().then((data) => {
-      if (active) setBanner(data);
+      if (active) setItems(data);
     });
 
     return () => {
@@ -28,12 +30,29 @@ const AdBanner = () => {
     };
   }, []);
 
+  // Har bir rasm o'zining durationSeconds'i tugagach navbatdagisiga
+  // o'tadi, oxirgisidan keyin boshiga qaytadi.
+  useEffect(() => {
+    if (items.length <= 1) return;
+
+    const current = items[activeIndex] ?? items[0];
+    const timer = setTimeout(() => {
+      setActiveIndex((prev) => (prev + 1) % items.length);
+    }, Math.max(current.durationSeconds, 1) * 1000);
+
+    return () => clearTimeout(timer);
+  }, [items, activeIndex]);
+
+  useEffect(() => {
+    if (activeIndex >= items.length) setActiveIndex(0);
+  }, [items, activeIndex]);
+
   // Header shu balandlikni bilib, o'zini banner ostiga joylashtirishi va
   // scroll qilinganda tepaga birga surilib "yopishib qolishi" uchun —
-  // ResizeObserver rasm yuklangach/ekran o'lchami o'zgarganda ham to'g'ri
-  // qiymatni ushlab turadi.
+  // ResizeObserver ekran o'lchami o'zgarganda ham to'g'ri qiymatni ushlab
+  // turadi (rasmlar almashsa ham balandlik CSS orqali doim bir xil).
   useEffect(() => {
-    if (!banner) {
+    if (items.length === 0) {
       window.dispatchEvent(
         new CustomEvent(AD_BANNER_HEIGHT_EVENT, { detail: 0 })
       );
@@ -60,21 +79,27 @@ const AdBanner = () => {
         new CustomEvent(AD_BANNER_HEIGHT_EVENT, { detail: 0 })
       );
     };
-  }, [banner]);
+  }, [items.length]);
 
-  if (!banner) return null;
+  if (items.length === 0) return null;
+
+  const current = items[activeIndex] ?? items[0];
 
   return (
     <AdBannerLink
       ref={linkRef}
-      href={banner.linkUrl}
+      href={current.linkUrl}
       target="_blank"
       rel="noopener noreferrer"
     >
-      <AdBannerImage
-        src={resolveBannerImage(banner.imageUrl)}
-        alt="reklama"
-      />
+      {items.map((item, index) => (
+        <AdBannerImage
+          key={`${item.imageUrl}-${index}`}
+          src={resolveBannerImage(item.imageUrl)}
+          alt="reklama"
+          $active={index === activeIndex}
+        />
+      ))}
     </AdBannerLink>
   );
 };
