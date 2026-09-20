@@ -6,6 +6,7 @@ import "react-phone-number-input/style.css";
 import StyledComponentsRegistry from "@/lib";
 import { ToastContainer } from "react-toastify";
 import { Footer, Header } from "@/app/_components";
+import AdBanner from "@/app/_components/specific/AdBanner";
 import ChatWidget from "@/app/_components/specific/ChatWidget";
 import SiteViewTracker from "@/app/_components/specific/SiteViewTracker";
 import ThemeProviderWrapper from "@/app/_components/configure/ThemeProvider";
@@ -28,6 +29,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
       <body className={poppins.variable}>
         <StyledComponentsRegistry>
           <ThemeProviderWrapper>
+            <AdBanner />
             <Header />
             {children}
             <Footer />
