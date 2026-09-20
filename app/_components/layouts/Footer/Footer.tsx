@@ -81,10 +81,10 @@ const Footer = () => {
   };
 
   const results = {
-    uz: "Natijalar",
-    en: "Results",
-    ar: "النتائج",
-    ru: "Результаты",
+    uz: "Natijalar va fikrlar",
+    en: "Results and feedback",
+    ar: "النتائج والآراء",
+    ru: "Результаты и отзывы",
   };
 
   const sendFormLanguageData = {
