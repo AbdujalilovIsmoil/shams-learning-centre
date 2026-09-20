@@ -15,6 +15,7 @@ interface RawBannerItem {
   imageUrl: string;
   linkUrl: string;
   durationSeconds: number;
+  isEnabled: boolean;
 }
 
 interface RawBanner {
@@ -50,7 +51,7 @@ export const fetchBanner = async (): Promise<AdBannerItem[]> => {
     }
 
     return data.items
-      .filter((item) => item.imageUrl && item.linkUrl)
+      .filter((item) => item.isEnabled !== false && item.imageUrl && item.linkUrl)
       .map((item) => ({
         imageUrl: item.imageUrl,
         linkUrl: item.linkUrl,
