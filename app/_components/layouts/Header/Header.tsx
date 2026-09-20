@@ -11,6 +11,7 @@ import {
   ArabLanguage,
   UzbekLanguage,
 } from "@/public/images/png";
+import { AD_BANNER_HEIGHT_EVENT } from "@/app/_components/specific/AdBanner/api";
 import {
   Trigger,
   Dropdown,
@@ -102,6 +103,52 @@ const Header = () => {
   };
 
   const lastSentRef = useRef(activeSection);
+
+  // ✅ Banner (agar yoqilgan bo'lsa) sayt tepasida Header'dan oldin ko'rinadi.
+  // Header o'zini shu banner ostiga joylashtiradi (top = banner balandligi)
+  // va scroll qilinganda banner bilan birga tepaga suriladi — banner
+  // balandligicha scroll qilingach, top 0'ga "yopishib qoladi" va Header
+  // shu yerdan normal fixed sifatida yurishda davom etadi. Banner bo'lmasa
+  // (yoki o'chirilgan bo'lsa) bannerHeight 0 bo'lib, Header darhol top:0'da
+  // fixed bo'lib qoladi — avvalgi (banner qo'shilishidan oldingi) xatti-harakat.
+  const [bannerHeight, setBannerHeight] = useState(0);
+  const [headerTop, setHeaderTop] = useState(0);
+
+  useEffect(() => {
+    const onBannerHeight = (event: Event) => {
+      const detail = (event as CustomEvent<number>).detail;
+      setBannerHeight(typeof detail === "number" ? detail : 0);
+    };
+
+    window.addEventListener(AD_BANNER_HEIGHT_EVENT, onBannerHeight);
+    return () =>
+      window.removeEventListener(AD_BANNER_HEIGHT_EVENT, onBannerHeight);
+  }, []);
+
+  useEffect(() => {
+    if (bannerHeight <= 0) {
+      setHeaderTop(0);
+      return;
+    }
+
+    let ticking = false;
+
+    const update = () => {
+      setHeaderTop(Math.max(bannerHeight - window.scrollY, 0));
+      ticking = false;
+    };
+
+    const onScroll = () => {
+      if (!ticking) {
+        ticking = true;
+        window.requestAnimationFrame(update);
+      }
+    };
+
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, [bannerHeight]);
 
   // ✅ Bosh sahifadamizmi (faqat shu yerda section-scroll-spy ishlaydi)
   const isHomePage = pathName === `/${language}` || pathName === `/${language}/`;
@@ -234,7 +281,7 @@ const Header = () => {
           </HeaderMenuItem>
         </HeaderMenuList>
       </HeaderMenu>
-      <HeaderContainer>
+      <HeaderContainer style={{ top: headerTop }}>
         <div className="container">
           <HeaderWrapper>
             <HeaderSiteLinkLogo href={`/${language}`}>

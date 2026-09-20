@@ -5,6 +5,7 @@ import Image from "next/image";
 import styled from "styled-components";
 
 export const HeaderContainer = styled.header`
+  top: 0;
   width: 100%;
   z-index: 1000;
   position: fixed;

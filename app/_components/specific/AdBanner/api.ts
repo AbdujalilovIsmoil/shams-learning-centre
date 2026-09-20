@@ -1,5 +1,10 @@
 export const AD_BANNER_API_URL = "https://api.shamsoquvmarkaz.uz";
 
+// AdBanner o'z balandligini shu hodisa orqali xabar qiladi — Header shuni
+// eshitib, o'zini banner ostiga joylashtiradi va scroll qilinganda tepaga
+// "yopishib qolguncha" birga suriladi (Header.tsx'ga qarang).
+export const AD_BANNER_HEIGHT_EVENT = "ad-banner:height";
+
 interface ApiEnvelope<T> {
   success: boolean;
   data: T;
