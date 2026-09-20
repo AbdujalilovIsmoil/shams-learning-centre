@@ -132,21 +132,47 @@ export const TestimonialsQuoteIcon = styled.span`
   }
 `;
 
-export const TestimonialsCardText = styled.p`
+export const TestimonialsCardText = styled.p<{ $expanded: boolean }>`
   flex: 1;
   font-size: 15.5px;
   line-height: 165%;
-  margin-bottom: 26px;
+  margin-bottom: 12px;
   color: ${({ theme }) => theme.colors.testimonials_box_content_text_color};
 
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 6;
-  overflow: hidden;
+  ${({ $expanded }) =>
+    $expanded
+      ? `
+    display: block;
+  `
+      : `
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 6;
+    overflow: hidden;
+  `}
 
   @media (max-width: 768px) {
     font-size: 14px;
-    -webkit-line-clamp: 7;
+
+    ${({ $expanded }) => ($expanded ? "" : "-webkit-line-clamp: 7;")}
+  }
+`;
+
+// "..." bilan kesib tashlash o'rniga — uzun fikrlarni "Batafsil" tugmasi
+// bilan to'liq ochish imkonini beradi.
+export const TestimonialsToggleButton = styled.button`
+  align-self: flex-start;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  padding: 0;
+  margin-bottom: 14px;
+  font-size: 13.5px;
+  font-weight: 700;
+  color: ${({ theme }) => theme.colors.light_green_color};
+
+  &:hover {
+    text-decoration: underline;
   }
 `;
 

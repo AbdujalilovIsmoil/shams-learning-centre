@@ -20,7 +20,7 @@ const Video = () => {
                 allowFullScreen
                 title="YouTube video player"
                 referrerPolicy="strict-origin-when-cross-origin"
-                src="https://www.youtube.com/embed/o2BJEWVLqSo?si=QcLXhfLtVr-uUEQY"
+                src="https://www.youtube.com/embed/UNtjFWu5p4I?si=gqWS8coeT-vVhv2F"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
               ></VideoSectionIframe>
             </VideoSectionLightContainer>

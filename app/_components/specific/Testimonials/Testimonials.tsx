@@ -28,6 +28,7 @@ import {
   TestimonialsFooterInfo,
   TestimonialsCarouselWrapper,
   TestimonialsContentTitle,
+  TestimonialsToggleButton,
   TestimonialsSkeletonGrid,
   TestimonialsSkeletonCard,
   TestimonialsAvatarFallback,
@@ -71,6 +72,39 @@ const Testimonials = () => {
 
   const [items, setItems] = useState<TestimonialItem[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  // Uzun fikrlarni "..." bilan kesib tashlash o'rniga — "Batafsil" tugmasi
+  // bosilgan fikrlarning id'lari shu yerda saqlanadi va to'liq ko'rsatiladi.
+  const [expandedIds, setExpandedIds] = useState<Set<string>>(new Set());
+
+  const toggleExpanded = (id: string) => {
+    setExpandedIds((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) {
+        next.delete(id);
+      } else {
+        next.add(id);
+      }
+      return next;
+    });
+  };
+
+  const readMoreLabel: Record<Language, string> = {
+    uz: "Batafsil",
+    en: "Read more",
+    ar: "المزيد",
+    ru: "Подробнее",
+  };
+
+  const readLessLabel: Record<Language, string> = {
+    uz: "Yig'ish",
+    en: "Show less",
+    ar: "عرض أقل",
+    ru: "Свернуть",
+  };
+
+  // Taxminan 6 qatordan oshadigan matnlar uchungina "Batafsil" tugmasi
+  // ko'rsatiladi — qisqa fikrlarda bu tugma ortiqcha bo'lardi.
+  const NEEDS_TOGGLE_LENGTH = 220;
 
   useEffect(() => {
     let active = true;
@@ -149,6 +183,8 @@ const Testimonials = () => {
                 {items.map((item) => {
                   const avatarUrl = resolveTestimonialAvatar(item.avatar);
                   const text = item.text[language] || item.text.uz;
+                  const isExpanded = expandedIds.has(item.id);
+                  const needsToggle = text.length > NEEDS_TOGGLE_LENGTH;
 
                   return (
                     <SwiperSlide key={item.id}>
@@ -157,7 +193,20 @@ const Testimonials = () => {
                           <QuoteGlyph />
                         </TestimonialsQuoteIcon>
 
-                        <TestimonialsCardText>{text}</TestimonialsCardText>
+                        <TestimonialsCardText $expanded={isExpanded}>
+                          {text}
+                        </TestimonialsCardText>
+
+                        {needsToggle && (
+                          <TestimonialsToggleButton
+                            type="button"
+                            onClick={() => toggleExpanded(item.id)}
+                          >
+                            {isExpanded
+                              ? readLessLabel[language]
+                              : readMoreLabel[language]}
+                          </TestimonialsToggleButton>
+                        )}
 
                         <TestimonialsCardFooter>
                           {avatarUrl ? (
