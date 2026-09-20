@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { CountUp } from "@/app/hooks";
 import { Language } from "@/app/types";
 import { usePathname } from "next/navigation";
@@ -10,6 +11,7 @@ import {
   CalendarIcon,
   ArrowRightIcon,
 } from "@/public/images/svg";
+import { DEFAULT_SITE_STATS, fetchSiteStats } from "./api";
 import {
   whyData,
   heroText,
@@ -57,6 +59,22 @@ import {
 const Hero = () => {
   const pathName = usePathname();
   const language = pathName.split("/")[1];
+
+  // Admin panel "Statistika" sahifasida kiritilgan raqamlar — dastlab
+  // standart qiymatlar bilan ko'rsatiladi, so'rov tugagach yangilanadi.
+  const [stats, setStats] = useState(DEFAULT_SITE_STATS);
+
+  useEffect(() => {
+    let active = true;
+
+    fetchSiteStats().then((data) => {
+      if (active) setStats(data);
+    });
+
+    return () => {
+      active = false;
+    };
+  }, []);
 
   return (
     <HeroBackground id="home">
@@ -179,7 +197,7 @@ const Hero = () => {
             <HeroActivities>
               <HeroActivity>
                 <HeroActivityTitle>
-                  <CountUp end={2000} start={1}>
+                  <CountUp key={stats.studentsCount} end={stats.studentsCount} start={1}>
                     {({ count }) => {
                       return <>{count}+</>;
                     }}
@@ -191,7 +209,7 @@ const Hero = () => {
               </HeroActivity>
               <HeroActivity>
                 <HeroActivityTitle>
-                  <CountUp end={110} start={1}>
+                  <CountUp key={stats.c1Students} end={stats.c1Students} start={1}>
                     {({ count }) => {
                       return <>{count}+</>;
                     }}
@@ -203,7 +221,7 @@ const Hero = () => {
               </HeroActivity>
               <HeroActivity>
                 <HeroActivityTitle>
-                  <CountUp end={500} start={1}>
+                  <CountUp key={stats.b1Students} end={stats.b1Students} start={1}>
                     {({ count }) => {
                       return <>{count}+</>;
                     }}
@@ -215,7 +233,7 @@ const Hero = () => {
               </HeroActivity>
               <HeroActivity>
                 <HeroActivityTitle>
-                  <CountUp end={20} start={1}>
+                  <CountUp key={stats.teachersTrained} end={stats.teachersTrained} start={1}>
                     {({ count }) => {
                       return <>{count}+</>;
                     }}
