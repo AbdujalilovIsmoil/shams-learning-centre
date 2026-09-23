@@ -208,6 +208,8 @@ const Testimonials = () => {
                 pagination={{
                   el: ".testimonials-pagination",
                   clickable: true,
+                  dynamicBullets: true,
+                  dynamicMainBullets: 3,
                 }}
                 autoplay={{
                   delay: 4000,

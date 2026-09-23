@@ -1,5 +1,6 @@
 import "aos";
 import "swiper/css";
+import "swiper/css/pagination";
 import Script from "next/script";
 import { Poppins } from "next/font/google";
 import "react-phone-number-input/style.css";
