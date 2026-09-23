@@ -6,9 +6,13 @@ export const AdBannerLink = styled.a`
   position: relative;
   display: block;
   width: 100%;
-  height: clamp(64px, 7vw, 140px);
+  aspect-ratio: 4 / 1;
   overflow: hidden;
   line-height: 0;
+
+  @media only screen and (min-width: 1024px) {
+    aspect-ratio: 6 / 1;
+  }
 `;
 
 export const AdBannerImage = styled.img<{ $active: boolean }>`
