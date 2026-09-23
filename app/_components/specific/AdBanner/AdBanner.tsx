@@ -88,9 +88,10 @@ const AdBanner = () => {
   return (
     <AdBannerLink
       ref={linkRef}
+      as={current.linkUrl ? "a" : "div"}
       href={current.linkUrl}
-      target="_blank"
-      rel="noopener noreferrer"
+      target={current.linkUrl ? "_blank" : undefined}
+      rel={current.linkUrl ? "noopener noreferrer" : undefined}
     >
       {items.map((item, index) => (
         <AdBannerImage

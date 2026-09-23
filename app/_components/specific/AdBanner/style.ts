@@ -6,12 +6,13 @@ export const AdBannerLink = styled.a`
   position: relative;
   display: block;
   width: 100%;
-  height: 220px;
+  aspect-ratio: 4 / 1;
+  max-height: 220px;
   overflow: hidden;
   line-height: 0;
 
   @media (max-width: 768px) {
-    height: 140px;
+    max-height: 140px;
   }
 `;
 
