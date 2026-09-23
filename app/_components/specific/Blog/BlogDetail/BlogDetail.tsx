@@ -4,6 +4,8 @@ import Aos from "aos";
 import { useEffect, useState } from "react";
 import { Language } from "@/app/types";
 import { usePathname } from "next/navigation";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay, Navigation, Pagination } from "swiper/modules";
 import { blogPageText } from "../data";
 import {
   fetchBlogPostBySlug,
@@ -11,7 +13,10 @@ import {
   resolveBlogImage,
   type BlogPost,
 } from "../api";
-import { CarouselArrowLeftIcon } from "@/public/images/svg";
+import {
+  CarouselArrowLeftIcon,
+  CarouselArrowRightIcon,
+} from "@/public/images/svg";
 import {
   BlogDetailBack,
   BlogDetailBackIcon,
@@ -19,6 +24,11 @@ import {
   BlogDetailCategory,
   BlogDetailTitle,
   BlogDetailMeta,
+  BlogDetailCover,
+  BlogDetailCoverImage,
+  BlogDetailCoverNavigation,
+  BlogDetailCoverNavigationImage,
+  BlogDetailCoverPagination,
   BlogDetailContent,
   BlogDetailRichContent,
   BlogDetailCta,
@@ -135,6 +145,72 @@ const BlogDetail = () => {
           </BlogDetailMeta>
         </BlogDetailHeader>
 
+        {post.images?.length > 0 && (
+          <BlogDetailCover data-aos="fade-up">
+            <Swiper
+              loop={post.images.length > 1}
+              key={post.slug}
+              slidesPerView={1}
+              modules={[Autoplay, Navigation, Pagination]}
+              dir={language === "ar" ? "rtl" : "ltr"}
+              navigation={{
+                prevEl: ".blog-detail-cover-prev",
+                nextEl: ".blog-detail-cover-next",
+              }}
+              pagination={{
+                el: ".blog-detail-cover-pagination",
+                clickable: true,
+              }}
+              autoplay={
+                post.images.length > 1
+                  ? { delay: 5000, disableOnInteraction: false }
+                  : false
+              }
+            >
+              {post.images.map((image, index) => (
+                <SwiperSlide key={`${image}-${index}`}>
+                  <BlogDetailCoverImage
+                    src={resolveBlogImage(image)}
+                    alt={`${post.title[language]} ${index + 1}`}
+                  />
+                </SwiperSlide>
+              ))}
+            </Swiper>
+
+            {post.images.length > 1 && (
+              <>
+                <BlogDetailCoverNavigation
+                  type="button"
+                  className="blog-detail-cover-prev"
+                  aria-label="previous image"
+                >
+                  <BlogDetailCoverNavigationImage
+                    width={18}
+                    height={18}
+                    src={CarouselArrowLeftIcon}
+                    alt="arrow left icon"
+                  />
+                </BlogDetailCoverNavigation>
+
+                <BlogDetailCoverNavigation
+                  type="button"
+                  className="blog-detail-cover-next"
+                  aria-label="next image"
+                >
+                  <BlogDetailCoverNavigationImage
+                    width={18}
+                    height={18}
+                    src={CarouselArrowRightIcon}
+                    alt="arrow right icon"
+                  />
+                </BlogDetailCoverNavigation>
+
+                <BlogDetailCoverPagination className="blog-detail-cover-pagination" />
+              </>
+            )}
+          </BlogDetailCover>
+        )}
+
         <BlogDetailContent data-aos="fade-up">
           <BlogDetailRichContent
             dir={language === "ar" ? "rtl" : "ltr"}
@@ -167,7 +243,7 @@ const BlogDetail = () => {
                 >
                   <BlogDetailRelatedImageWrapper>
                     <BlogDetailRelatedImage
-                      src={resolveBlogImage(el.image)}
+                      src={resolveBlogImage(el.images?.[0] ?? "")}
                       alt={el.title[language]}
                     />
                   </BlogDetailRelatedImageWrapper>

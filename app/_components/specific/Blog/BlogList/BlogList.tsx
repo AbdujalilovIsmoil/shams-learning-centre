@@ -237,7 +237,7 @@ const BlogList = () => {
                 <Link href={`/${language}/blog/${post.slug}`}>
                   <BlogCardImageWrapper>
                     <BlogCardImage
-                      src={resolveBlogImage(post.image)}
+                      src={resolveBlogImage(post.images?.[0] ?? "")}
                       alt={post.title[language]}
                     />
                     <BlogCardCategory>

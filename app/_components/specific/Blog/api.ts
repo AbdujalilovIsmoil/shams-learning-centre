@@ -7,7 +7,7 @@ export type LangRecord = Record<Language, string>;
 export interface BlogPost {
   id: string;
   slug: string;
-  image: string;
+  images: string[];
   date: string;
   readTime: number;
   published: boolean;

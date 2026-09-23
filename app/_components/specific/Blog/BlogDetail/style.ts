@@ -105,6 +105,16 @@ export const BlogDetailCover = styled.div`
   margin: 0 auto 50px auto;
   border-radius: 24px;
 
+  .swiper {
+    width: 100%;
+    height: 100%;
+  }
+
+  .swiper-slide {
+    width: 100%;
+    height: 100%;
+  }
+
   @media (max-width: 1500px) {
     height: 420px;
   }
@@ -127,6 +137,111 @@ export const BlogDetailCoverImage = styled.img`
   height: 100%;
   display: block;
   object-fit: cover;
+`;
+
+export const BlogDetailCoverNavigation = styled.button`
+  top: 50%;
+  z-index: 5;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  cursor: pointer;
+  border-radius: 50%;
+  align-items: center;
+  position: absolute;
+  justify-content: center;
+  transform: translateY(-50%);
+  transition: all 0.2s ease;
+  border: none;
+  background-color: rgba(15, 23, 42, 0.45);
+  backdrop-filter: blur(2px);
+
+  &:hover {
+    background-color: rgba(15, 23, 42, 0.65);
+    transform: translateY(-50%) scale(1.06);
+  }
+
+  &.blog-detail-cover-prev {
+    left: 16px;
+  }
+
+  &.blog-detail-cover-next {
+    right: 16px;
+  }
+
+  &.swiper-button-disabled {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  @media (max-width: 768px) {
+    width: 38px;
+    height: 38px;
+
+    &.blog-detail-cover-prev {
+      left: 10px;
+    }
+
+    &.blog-detail-cover-next {
+      right: 10px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    width: 32px;
+    height: 32px;
+  }
+`;
+
+export const BlogDetailCoverNavigationImage = styled(Image)`
+  width: 18px;
+  height: 18px;
+
+  @media (max-width: 768px) {
+    width: 14px;
+    height: 14px;
+  }
+
+  @media (max-width: 480px) {
+    width: 12px;
+    height: 12px;
+  }
+`;
+
+export const BlogDetailCoverPagination = styled.div`
+  left: 0;
+  right: 0;
+  bottom: 16px;
+  z-index: 5;
+  display: flex;
+  position: absolute;
+  align-items: center;
+  justify-content: center;
+
+  &.swiper-pagination-clickable .swiper-pagination-bullet {
+    cursor: pointer;
+  }
+
+  .swiper-pagination-bullet {
+    width: 8px;
+    height: 8px;
+    margin: 0 4px;
+    display: inline-block;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.55);
+    opacity: 1;
+    transition: all 0.2s ease;
+  }
+
+  .swiper-pagination-bullet-active {
+    width: 22px;
+    border-radius: 4px;
+    background-color: ${({ theme }) => theme.colors.light};
+  }
+
+  @media (max-width: 480px) {
+    bottom: 10px;
+  }
 `;
 
 export const BlogDetailContent = styled.div`

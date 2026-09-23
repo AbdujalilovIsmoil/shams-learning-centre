@@ -151,7 +151,7 @@ const BlogHome = () => {
                     <Link href={`/${language}/blog/${post.slug}`}>
                       <BlogHomeCardImageWrapper>
                         <BlogHomeCardImage
-                          src={resolveBlogImage(post.image)}
+                          src={resolveBlogImage(post.images?.[0] ?? "")}
                           alt={post.title[language]}
                         />
                         <BlogHomeCardCategory>
