@@ -7,13 +7,8 @@ export const AdBannerLink = styled.a`
   display: block;
   width: 100%;
   aspect-ratio: 4 / 1;
-  max-height: 220px;
   overflow: hidden;
   line-height: 0;
-
-  @media (max-width: 768px) {
-    max-height: 140px;
-  }
 `;
 
 export const AdBannerImage = styled.img<{ $active: boolean }>`
