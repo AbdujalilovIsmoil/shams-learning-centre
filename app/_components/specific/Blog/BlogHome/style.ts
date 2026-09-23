@@ -3,11 +3,24 @@
 import Link from "next/link";
 import Image from "next/image";
 import styled, { keyframes } from "styled-components";
+import NavigationBase from "../../../ui/NavigationBase";
 
 export const BlogHomeSection = styled.section`
   padding: 60px 0;
   margin-bottom: 80px;
   scroll-margin-top: 100px;
+
+  .swiper {
+    width: 100%;
+    overflow-x: hidden;
+    overflow-y: visible;
+    padding-bottom: 8px;
+  }
+
+  .swiper-slide {
+    height: auto;
+    display: flex;
+  }
 
   @media (max-width: 768px) {
     padding: 40px 0;
@@ -92,6 +105,87 @@ export const BlogHomeGrid = styled.div`
   @media (max-width: 640px) {
     gap: 20px;
     grid-template-columns: 1fr;
+  }
+`;
+
+export const BlogHomeCarouselWrapper = styled.div`
+  position: relative;
+  margin-bottom: 44px;
+`;
+
+export const BlogHomeNavigations = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 32px;
+`;
+
+export const BlogHomeNavigation = styled(NavigationBase)`
+  width: 56px;
+  z-index: 20;
+  height: 56px;
+  display: flex;
+  cursor: pointer;
+  border-radius: 50%;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  border: 1px solid ${({ theme }) => theme.colors.group_course_color};
+  background-color: ${({ theme }) => theme.colors.light};
+  box-shadow: 0px 4px 30px 0px
+    ${({ theme }) => theme.colors.testimonials_navigation_color};
+
+  &:hover {
+    transform: scale(1.06);
+    border-color: ${({ theme }) => theme.colors.light_green_color};
+    box-shadow: 0px 6px 40px 0px
+      ${({ theme }) => theme.colors.testimonials_navigation_hover_color};
+  }
+
+  &:first-child {
+    transform: rotate(180deg);
+  }
+
+  &:first-child:hover {
+    transform: rotate(180deg) scale(1.06);
+  }
+
+  @media (max-width: 768px) {
+    width: 46px;
+    height: 46px;
+  }
+`;
+
+export const BlogHomeNavigationImage = styled(Image)`
+  height: 18px;
+  width: auto;
+
+  @media (max-width: 768px) {
+    height: 15px;
+  }
+`;
+
+export const BlogHomePagination = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  .swiper-pagination-bullet {
+    width: 8px;
+    height: 8px;
+    display: block;
+    border-radius: 50%;
+    cursor: pointer;
+    background-color: ${({ theme }) => theme.colors.group_course_color};
+    opacity: 1;
+    transition: all 0.2s ease;
+  }
+
+  .swiper-pagination-bullet-active {
+    width: 24px;
+    border-radius: 4px;
+    background-color: ${({ theme }) => theme.colors.light_green_color};
   }
 `;
 

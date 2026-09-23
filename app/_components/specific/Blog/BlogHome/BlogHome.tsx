@@ -4,7 +4,9 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Language } from "@/app/types";
 import { usePathname } from "next/navigation";
-import { ArrowRightIcon } from "@/public/images/svg";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay, Navigation, Pagination } from "swiper/modules";
+import { ArrowRightIcon, CarouselSmallArrowIcon } from "@/public/images/svg";
 import { blogHomeText } from "../data";
 import { fetchBlogPosts, resolveBlogImage, type BlogPost } from "../api";
 import {
@@ -34,9 +36,14 @@ import {
   BlogHomeCardCategory,
   BlogHomeSkeletonImage,
   BlogHomeCardImageWrapper,
+  BlogHomeNavigation,
+  BlogHomeNavigations,
+  BlogHomeNavigationImage,
+  BlogHomePagination,
+  BlogHomeCarouselWrapper,
 } from "./style";
 
-const BLOG_HOME_LIMIT = 3;
+const BLOG_HOME_LIMIT = 6;
 
 const BlogHome = () => {
   const pathName = usePathname();
@@ -107,50 +114,103 @@ const BlogHome = () => {
         )}
 
         {!isLoading && !hasError && posts.length > 0 && (
-          <BlogHomeGrid>
-            {posts.map((post, index) => (
-              <BlogHomeCard
-                key={post.id}
-                data-aos="fade-up"
-                data-aos-delay={index * 100}
-              >
-                <Link href={`/${language}/blog/${post.slug}`}>
-                  <BlogHomeCardImageWrapper>
-                    <BlogHomeCardImage
-                      src={resolveBlogImage(post.image)}
-                      alt={post.title[language]}
-                    />
-                    <BlogHomeCardCategory>
-                      {post.category[language]}
-                    </BlogHomeCardCategory>
-                  </BlogHomeCardImageWrapper>
-                </Link>
-
-                <BlogHomeCardContent>
-                  <BlogHomeCardMeta>
-                    {post.date} · {post.readTime} {text.minRead}
-                  </BlogHomeCardMeta>
-                  <BlogHomeCardTitle>
+          <BlogHomeCarouselWrapper>
+            <Swiper
+              loop={posts.length > 3}
+              key={language}
+              slidesPerView={1}
+              modules={[Autoplay, Navigation, Pagination]}
+              dir={language === "ar" ? "rtl" : "ltr"}
+              navigation={{
+                prevEl: ".blog-home-prev",
+                nextEl: ".blog-home-next",
+              }}
+              pagination={{
+                el: ".blog-home-pagination",
+                clickable: true,
+                dynamicBullets: true,
+                dynamicMainBullets: 3,
+              }}
+              autoplay={{
+                delay: 4000,
+                disableOnInteraction: false,
+              }}
+              spaceBetween={28}
+              breakpoints={{
+                0: { slidesPerView: 1, spaceBetween: 20 },
+                640: { slidesPerView: 2, spaceBetween: 20 },
+                1024: { slidesPerView: 3, spaceBetween: 28 },
+              }}
+            >
+              {posts.map((post, index) => (
+                <SwiperSlide key={post.id}>
+                  <BlogHomeCard
+                    data-aos="fade-up"
+                    data-aos-delay={index * 100}
+                  >
                     <Link href={`/${language}/blog/${post.slug}`}>
-                      {post.title[language]}
+                      <BlogHomeCardImageWrapper>
+                        <BlogHomeCardImage
+                          src={resolveBlogImage(post.image)}
+                          alt={post.title[language]}
+                        />
+                        <BlogHomeCardCategory>
+                          {post.category[language]}
+                        </BlogHomeCardCategory>
+                      </BlogHomeCardImageWrapper>
                     </Link>
-                  </BlogHomeCardTitle>
-                  <BlogHomeCardExcerpt>
-                    {post.excerpt[language]}
-                  </BlogHomeCardExcerpt>
-                  <BlogHomeCardLink href={`/${language}/blog/${post.slug}`}>
-                    {text.readMore}
-                    <BlogHomeCardLinkIcon
-                      width={18}
-                      height={18}
-                      src={ArrowRightIcon}
-                      alt="arrow right icon"
-                    />
-                  </BlogHomeCardLink>
-                </BlogHomeCardContent>
-              </BlogHomeCard>
-            ))}
-          </BlogHomeGrid>
+
+                    <BlogHomeCardContent>
+                      <BlogHomeCardMeta>
+                        {post.date} · {post.readTime} {text.minRead}
+                      </BlogHomeCardMeta>
+                      <BlogHomeCardTitle>
+                        <Link href={`/${language}/blog/${post.slug}`}>
+                          {post.title[language]}
+                        </Link>
+                      </BlogHomeCardTitle>
+                      <BlogHomeCardExcerpt>
+                        {post.excerpt[language]}
+                      </BlogHomeCardExcerpt>
+                      <BlogHomeCardLink
+                        href={`/${language}/blog/${post.slug}`}
+                      >
+                        {text.readMore}
+                        <BlogHomeCardLinkIcon
+                          width={18}
+                          height={18}
+                          src={ArrowRightIcon}
+                          alt="arrow right icon"
+                        />
+                      </BlogHomeCardLink>
+                    </BlogHomeCardContent>
+                  </BlogHomeCard>
+                </SwiperSlide>
+              ))}
+            </Swiper>
+
+            <BlogHomeNavigations>
+              <BlogHomeNavigation type="button" className="blog-home-prev">
+                <BlogHomeNavigationImage
+                  width={18}
+                  height={18}
+                  alt="arrow left"
+                  src={CarouselSmallArrowIcon}
+                />
+              </BlogHomeNavigation>
+
+              <BlogHomePagination className="blog-home-pagination" />
+
+              <BlogHomeNavigation type="button" className="blog-home-next">
+                <BlogHomeNavigationImage
+                  width={18}
+                  height={18}
+                  alt="arrow right"
+                  src={CarouselSmallArrowIcon}
+                />
+              </BlogHomeNavigation>
+            </BlogHomeNavigations>
+          </BlogHomeCarouselWrapper>
         )}
 
         <BlogHomeFooter data-aos="fade-up">
