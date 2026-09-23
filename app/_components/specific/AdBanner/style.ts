@@ -35,7 +35,7 @@ export const AdBannerLabel = styled.span`
   border-radius: 4px;
   background: rgba(0, 0, 0, 0.55);
   color: #fff;
-  font-size: 10px;
+  font-size: 9px;
   font-weight: 600;
   letter-spacing: 0.04em;
   line-height: 1.4;
