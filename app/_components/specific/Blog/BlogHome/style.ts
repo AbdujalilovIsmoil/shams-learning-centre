@@ -216,6 +216,22 @@ export const BlogHomeCardImageWrapper = styled.div`
   }
 `;
 
+export const BlogHomeCardImageTrack = styled.div<{ $index: number; $count: number }>`
+  height: 100%;
+  display: flex;
+  transition: transform 0.5s ease;
+  width: ${({ $count }) => $count * 100}%;
+  transform: ${({ $index, $count }) =>
+    `translateX(-${(100 / $count) * $index}%)`};
+`;
+
+export const BlogHomeCardImageSlide = styled.div<{ $count: number }>`
+  height: 100%;
+  flex-shrink: 0;
+  position: relative;
+  width: ${({ $count }) => 100 / $count}%;
+`;
+
 export const BlogHomeCardImage = styled.img`
   position: absolute;
   inset: 0;
@@ -228,6 +244,79 @@ export const BlogHomeCardImage = styled.img`
   ${BlogHomeCard}:hover & {
     transform: scale(1.06);
   }
+`;
+
+export const BlogHomeCardImageNav = styled.button`
+  top: 50%;
+  z-index: 3;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  cursor: pointer;
+  border: none;
+  border-radius: 50%;
+  align-items: center;
+  position: absolute;
+  justify-content: center;
+  transform: translateY(-50%);
+  transition: background-color 0.2s ease, opacity 0.2s ease;
+  background-color: rgba(15, 23, 42, 0.45);
+  backdrop-filter: blur(2px);
+  opacity: 0;
+
+  ${BlogHomeCard}:hover & {
+    opacity: 1;
+  }
+
+  &:hover {
+    background-color: rgba(15, 23, 42, 0.65);
+  }
+
+  &.blog-home-card-image-prev {
+    left: 10px;
+  }
+
+  &.blog-home-card-image-next {
+    right: 10px;
+  }
+
+  @media (max-width: 1024px) {
+    opacity: 1;
+    width: 28px;
+    height: 28px;
+  }
+`;
+
+export const BlogHomeCardImageNavIcon = styled(Image)`
+  width: 14px;
+  height: 14px;
+
+  @media (max-width: 480px) {
+    width: 12px;
+    height: 12px;
+  }
+`;
+
+export const BlogHomeCardImageDots = styled.div`
+  left: 0;
+  right: 0;
+  bottom: 12px;
+  z-index: 3;
+  gap: 5px;
+  display: flex;
+  position: absolute;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const BlogHomeCardImageDot = styled.span<{ $active?: boolean }>`
+  width: ${({ $active }) => ($active ? "16px" : "6px")};
+  height: 6px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background-color: ${({ $active }) =>
+    $active ? "#fff" : "rgba(255, 255, 255, 0.55)"};
 `;
 
 export const BlogHomeCardCategory = styled.span`

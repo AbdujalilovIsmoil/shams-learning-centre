@@ -8,7 +8,8 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Navigation, Pagination } from "swiper/modules";
 import { ArrowRightIcon, CarouselSmallArrowIcon } from "@/public/images/svg";
 import { blogHomeText } from "../data";
-import { fetchBlogPosts, resolveBlogImage, type BlogPost } from "../api";
+import { fetchBlogPosts, type BlogPost } from "../api";
+import BlogHomeCardImages from "./BlogHomeCardImages";
 import {
   BlogHomeCard,
   BlogHomeGrid,
@@ -21,7 +22,6 @@ import {
   BlogHomeCardLink,
   BlogHomeCardMeta,
   BlogHomeEmptyText,
-  BlogHomeCardImage,
   BlogHomeCardTitle,
   BlogHomeEmptyTitle,
   BlogHomeEmptyState,
@@ -150,8 +150,8 @@ const BlogHome = () => {
                   >
                     <Link href={`/${language}/blog/${post.slug}`}>
                       <BlogHomeCardImageWrapper>
-                        <BlogHomeCardImage
-                          src={resolveBlogImage(post.images?.[0] ?? "")}
+                        <BlogHomeCardImages
+                          images={post.images ?? []}
                           alt={post.title[language]}
                         />
                         <BlogHomeCardCategory>
