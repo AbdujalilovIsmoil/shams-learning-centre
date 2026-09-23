@@ -7,7 +7,7 @@ import {
   fetchBanner,
   resolveBannerImage,
 } from "./api";
-import { AdBannerImage, AdBannerLink } from "./style";
+import { AdBannerImage, AdBannerLabel, AdBannerLink } from "./style";
 
 // Admin panelning "Banner" sahifasida yoqilgan bo'lsa, sayt eng tepasida
 // (Header'dan ham yuqorida) ko'pi bilan 5 ta rasm navbat bilan (har biri o'z
@@ -101,6 +101,7 @@ const AdBanner = () => {
           $active={index === activeIndex}
         />
       ))}
+      <AdBannerLabel>REKLAMA</AdBannerLabel>
     </AdBannerLink>
   );
 };
