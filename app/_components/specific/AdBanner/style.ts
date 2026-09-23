@@ -6,7 +6,7 @@ export const AdBannerLink = styled.a`
   position: relative;
   display: block;
   width: 100%;
-  aspect-ratio: 4 / 1;
+  height: clamp(56px, 5.5vw, 110px);
   overflow: hidden;
   line-height: 0;
 `;
