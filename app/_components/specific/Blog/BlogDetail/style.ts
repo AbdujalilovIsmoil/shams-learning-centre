@@ -215,12 +215,14 @@ export const BlogDetailRichContent = styled.div`
 
   img {
     width: 100%;
+    max-width: 100%;
     height: auto;
     border-radius: 16px;
     margin: 24px 0;
   }
 
   figure {
+    max-width: 100%;
     margin: 24px 0;
   }
 
@@ -229,6 +231,21 @@ export const BlogDetailRichContent = styled.div`
     text-align: center;
     margin-top: 8px;
     color: ${({ theme }) => theme.colors.thin_gray};
+  }
+
+  /* CKEditor'ning "Media Embed" (YouTube va h.k.) plagini video uchun
+     ".media" klassli figure ichida o'zi position/padding-bottom trick
+     bilan nisbatni (aspect-ratio) inline style orqali belgilaydi — bu
+     yerda faqat o'sha o'ramning butun ustun kengligini (100%) egallashi
+     va iframe hech qachon tashqariga chiqib ketmasligi ta'minlanadi. */
+  figure.media {
+    width: 100%;
+    position: relative;
+  }
+
+  figure.media iframe,
+  figure.media video {
+    max-width: 100%;
   }
 
   hr {
