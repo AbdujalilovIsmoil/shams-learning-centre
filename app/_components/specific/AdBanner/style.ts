@@ -6,7 +6,7 @@ export const AdBannerLink = styled.a`
   position: relative;
   display: block;
   width: 100%;
-  height: clamp(56px, 5.5vw, 110px);
+  height: clamp(64px, 7vw, 140px);
   overflow: hidden;
   line-height: 0;
 `;
