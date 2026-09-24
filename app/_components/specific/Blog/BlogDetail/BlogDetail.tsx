@@ -1,7 +1,7 @@
 "use client";
 
 import Aos from "aos";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Language } from "@/app/types";
 import { usePathname } from "next/navigation";
 import { blogPageText } from "../data";
@@ -12,7 +12,7 @@ import {
   type BlogPost,
 } from "../api";
 import { CarouselArrowLeftIcon } from "@/public/images/svg";
-import BlogDetailCoverCarousel from "./BlogDetailCoverCarousel";
+import { enhanceContentCarousels } from "./contentCarousel";
 import {
   BlogDetailBack,
   BlogDetailBackIcon,
@@ -42,7 +42,6 @@ import {
   BlogDetailSkeletonCategory,
   BlogDetailSkeletonTitle,
   BlogDetailSkeletonMeta,
-  BlogDetailSkeletonCover,
   BlogDetailSkeletonLine,
 } from "./style";
 
@@ -56,6 +55,7 @@ const BlogDetail = () => {
   const [post, setPost] = useState<BlogPost | null>(null);
   const [relatedPosts, setRelatedPosts] = useState<BlogPost[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const richContentRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const html = document.querySelector("html");
@@ -92,6 +92,13 @@ const BlogDetail = () => {
     Aos.refresh();
   }, [post]);
 
+  useEffect(() => {
+    const container = richContentRef.current;
+    if (!container || !post) return;
+
+    return enhanceContentCarousels(container);
+  }, [post]);
+
   if (isLoading) {
     return (
       <BlogDetailSection dir={language === "ar" ? "rtl" : "ltr"}>
@@ -102,8 +109,6 @@ const BlogDetail = () => {
             <BlogDetailSkeletonTitle $width="60%" />
             <BlogDetailSkeletonMeta />
           </BlogDetailHeader>
-
-          <BlogDetailSkeletonCover />
 
           <BlogDetailContent>
             <BlogDetailSkeletonLine />
@@ -158,17 +163,9 @@ const BlogDetail = () => {
           </BlogDetailMeta>
         </BlogDetailHeader>
 
-        {post.images?.length > 0 && (
-          <div data-aos="fade-up">
-            <BlogDetailCoverCarousel
-              images={post.images}
-              alt={post.title[language]}
-            />
-          </div>
-        )}
-
         <BlogDetailContent data-aos="fade-up">
           <BlogDetailRichContent
+            ref={richContentRef}
             dir={language === "ar" ? "rtl" : "ltr"}
             dangerouslySetInnerHTML={{ __html: post.content[language] }}
           />

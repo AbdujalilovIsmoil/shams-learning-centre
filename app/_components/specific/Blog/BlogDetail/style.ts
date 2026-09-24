@@ -96,123 +96,6 @@ export const BlogDetailMeta = styled.div`
   color: ${({ theme }) => theme.colors.thin_gray};
 `;
 
-export const BlogDetailCover = styled.div`
-  width: 100%;
-  height: 480px;
-  overflow: hidden;
-  max-width: 820px;
-  position: relative;
-  margin: 0 auto 50px auto;
-  border-radius: 24px;
-
-  @media (max-width: 1500px) {
-    height: 420px;
-  }
-
-  @media (max-width: 768px) {
-    height: 320px;
-    border-radius: 16px;
-    margin: 0 auto 36px auto;
-  }
-
-  @media (max-width: 480px) {
-    height: 220px;
-  }
-`;
-
-export const BlogDetailCoverTrack = styled.div<{ $index: number; $count: number }>`
-  height: 100%;
-  display: flex;
-  transition: transform 0.5s ease;
-  width: ${({ $count }) => $count * 100}%;
-  transform: ${({ $index, $count }) =>
-    `translateX(-${(100 / $count) * $index}%)`};
-`;
-
-export const BlogDetailCoverSlide = styled.div<{ $count: number }>`
-  height: 100%;
-  flex-shrink: 0;
-  position: relative;
-  width: ${({ $count }) => 100 / $count}%;
-`;
-
-export const BlogDetailCoverImage = styled.img`
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  display: block;
-  object-fit: cover;
-`;
-
-export const BlogDetailCoverNav = styled.button`
-  top: 50%;
-  z-index: 3;
-  width: 44px;
-  height: 44px;
-  display: flex;
-  cursor: pointer;
-  border: none;
-  border-radius: 50%;
-  align-items: center;
-  position: absolute;
-  justify-content: center;
-  transform: translateY(-50%);
-  transition: background-color 0.2s ease, opacity 0.2s ease;
-  background-color: rgba(15, 23, 42, 0.45);
-  backdrop-filter: blur(2px);
-
-  &:hover {
-    background-color: rgba(15, 23, 42, 0.65);
-  }
-
-  &.blog-detail-cover-prev {
-    left: 16px;
-  }
-
-  &.blog-detail-cover-next {
-    right: 16px;
-  }
-
-  @media (max-width: 768px) {
-    width: 36px;
-    height: 36px;
-  }
-`;
-
-export const BlogDetailCoverNavIcon = styled(Image)`
-  width: 18px;
-  height: 18px;
-  filter: brightness(0) invert(1);
-
-  @media (max-width: 480px) {
-    width: 14px;
-    height: 14px;
-  }
-`;
-
-export const BlogDetailCoverDots = styled.div`
-  left: 0;
-  right: 0;
-  bottom: 16px;
-  z-index: 3;
-  gap: 6px;
-  display: flex;
-  position: absolute;
-  align-items: center;
-  justify-content: center;
-`;
-
-export const BlogDetailCoverDot = styled.span<{ $active?: boolean }>`
-  width: ${({ $active }) => ($active ? "22px" : "8px")};
-  height: 8px;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  background-color: ${({ $active }) =>
-    $active ? "#fff" : "rgba(255, 255, 255, 0.55)"};
-`;
-
 export const BlogDetailContent = styled.div`
   max-width: 820px;
   margin: 0 auto;
@@ -325,6 +208,122 @@ export const BlogDetailRichContent = styled.div`
   figure.media {
     width: 100%;
     position: relative;
+  }
+
+  /* Admin panelning CKEditor'ida "Rasm karuseli qo'shish" tugmasi bilan
+     qo'shilgan blok shu klasslar bilan xom HTML holida keladi (qarang:
+     admin-panel/src/ckeditor/ContentCarouselPlugin.ts) — bu yerda uni
+     haqiqiy carousel'ga aylantiruvchi CSS, JS xulq-atvori esa
+     contentCarousel.ts orqali ilova qilinadi. */
+  .blog-content-carousel {
+    position: relative;
+    width: 100%;
+    height: 420px;
+    overflow: hidden;
+    border-radius: 16px;
+    margin: 24px 0;
+  }
+
+  .blog-content-carousel-track {
+    display: flex;
+    height: 100%;
+    transition: transform 0.5s ease;
+  }
+
+  .blog-content-carousel-slide {
+    flex: 0 0 100%;
+    width: 100%;
+    height: 100%;
+    position: relative;
+  }
+
+  .blog-content-carousel-slide img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    border-radius: 0;
+    margin: 0;
+  }
+
+  .blog-content-carousel-nav {
+    position: absolute;
+    top: 50%;
+    z-index: 3;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    transform: translateY(-50%);
+    color: #fff;
+    font-size: 22px;
+    line-height: 1;
+    background-color: rgba(15, 23, 42, 0.45);
+    backdrop-filter: blur(2px);
+    transition: background-color 0.2s ease;
+  }
+
+  .blog-content-carousel-nav:hover {
+    background-color: rgba(15, 23, 42, 0.65);
+  }
+
+  .blog-content-carousel-prev {
+    left: 14px;
+  }
+
+  .blog-content-carousel-next {
+    right: 14px;
+  }
+
+  .blog-content-carousel-dots {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 14px;
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+  }
+
+  .blog-content-carousel-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 4px;
+    cursor: pointer;
+    background-color: rgba(255, 255, 255, 0.55);
+    transition: all 0.2s ease;
+  }
+
+  .blog-content-carousel-dot.is-active {
+    width: 22px;
+    background-color: #fff;
+  }
+
+  @media (max-width: 768px) {
+    .blog-content-carousel {
+      height: 300px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .blog-content-carousel {
+      height: 220px;
+      border-radius: 12px;
+    }
+
+    .blog-content-carousel-nav {
+      width: 32px;
+      height: 32px;
+      font-size: 18px;
+    }
   }
 
   figure.media iframe,
