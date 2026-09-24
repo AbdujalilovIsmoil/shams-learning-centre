@@ -39,6 +39,11 @@ import {
   BlogNotFoundTitle,
   BlogNotFoundText,
   BlogNotFoundLink,
+  BlogDetailSkeletonCategory,
+  BlogDetailSkeletonTitle,
+  BlogDetailSkeletonMeta,
+  BlogDetailSkeletonCover,
+  BlogDetailSkeletonLine,
 } from "./style";
 
 const BlogDetail = () => {
@@ -90,7 +95,24 @@ const BlogDetail = () => {
   if (isLoading) {
     return (
       <BlogDetailSection dir={language === "ar" ? "rtl" : "ltr"}>
-        <div className="container" />
+        <div className="container">
+          <BlogDetailHeader>
+            <BlogDetailSkeletonCategory />
+            <BlogDetailSkeletonTitle />
+            <BlogDetailSkeletonTitle $width="60%" />
+            <BlogDetailSkeletonMeta />
+          </BlogDetailHeader>
+
+          <BlogDetailSkeletonCover />
+
+          <BlogDetailContent>
+            <BlogDetailSkeletonLine />
+            <BlogDetailSkeletonLine />
+            <BlogDetailSkeletonLine $width="80%" />
+            <BlogDetailSkeletonLine $width="90%" />
+            <BlogDetailSkeletonLine $width="70%" />
+          </BlogDetailContent>
+        </div>
       </BlogDetailSection>
     );
   }

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 
 export const BlogDetailSection = styled.section`
   padding: 160px 0 120px 0;
@@ -183,6 +183,7 @@ export const BlogDetailCoverNav = styled.button`
 export const BlogDetailCoverNavIcon = styled(Image)`
   width: 18px;
   height: 18px;
+  filter: brightness(0) invert(1);
 
   @media (max-width: 480px) {
     width: 14px;
@@ -562,5 +563,91 @@ export const BlogNotFoundLink = styled(Link)`
   &:hover {
     background-color: transparent;
     color: ${({ theme }) => theme.colors.dark_blue};
+  }
+`;
+
+const shimmer = keyframes`
+  0% {
+    background-position: -400px 0;
+  }
+  100% {
+    background-position: 400px 0;
+  }
+`;
+
+const skeletonBackground = `
+  background: linear-gradient(
+    90deg,
+    rgba(148, 163, 184, 0.18) 0%,
+    rgba(148, 163, 184, 0.32) 50%,
+    rgba(148, 163, 184, 0.18) 100%
+  );
+  background-size: 800px 100%;
+`;
+
+export const BlogDetailSkeletonCategory = styled.div`
+  width: 130px;
+  height: 26px;
+  margin-bottom: 20px;
+  border-radius: 50px;
+  ${skeletonBackground}
+  animation: ${shimmer} 1.5s infinite linear;
+`;
+
+export const BlogDetailSkeletonTitle = styled.div<{ $width?: string }>`
+  width: ${({ $width }) => $width ?? "100%"};
+  height: 38px;
+  margin-bottom: 16px;
+  border-radius: 8px;
+  ${skeletonBackground}
+  animation: ${shimmer} 1.5s infinite linear;
+
+  @media (max-width: 768px) {
+    height: 28px;
+  }
+`;
+
+export const BlogDetailSkeletonMeta = styled.div`
+  width: 180px;
+  height: 15px;
+  border-radius: 6px;
+  ${skeletonBackground}
+  animation: ${shimmer} 1.5s infinite linear;
+`;
+
+export const BlogDetailSkeletonCover = styled.div`
+  width: 100%;
+  height: 480px;
+  max-width: 820px;
+  margin: 0 auto 50px auto;
+  border-radius: 24px;
+  ${skeletonBackground}
+  animation: ${shimmer} 1.5s infinite linear;
+
+  @media (max-width: 1500px) {
+    height: 420px;
+  }
+
+  @media (max-width: 768px) {
+    height: 320px;
+    border-radius: 16px;
+    margin: 0 auto 36px auto;
+  }
+
+  @media (max-width: 480px) {
+    height: 220px;
+  }
+`;
+
+export const BlogDetailSkeletonLine = styled.div<{ $width?: string }>`
+  width: ${({ $width }) => $width ?? "100%"};
+  height: 16px;
+  margin-bottom: 14px;
+  border-radius: 6px;
+  ${skeletonBackground}
+  animation: ${shimmer} 1.5s infinite linear;
+
+  &:last-child {
+    margin-bottom: 0;
   }
 `;

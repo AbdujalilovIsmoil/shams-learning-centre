@@ -290,6 +290,7 @@ export const BlogHomeCardImageNav = styled.button`
 export const BlogHomeCardImageNavIcon = styled(Image)`
   width: 14px;
   height: 14px;
+  filter: brightness(0) invert(1);
 
   @media (max-width: 480px) {
     width: 12px;
