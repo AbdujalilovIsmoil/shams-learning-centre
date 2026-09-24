@@ -272,26 +272,47 @@ export const HeaderContactButton = styled.a`
   }
 `;
 
-export const HeaderMenuOpenContainer = styled.div`
-  width: 45px;
-  height: 45px;
-  display: flex;
+export const HeaderMenuOpenContainer = styled.button`
+  width: 46px;
+  height: 46px;
   display: none;
+  gap: 5px;
+  border: none;
   cursor: pointer;
-  border-radius: 16px;
   align-items: center;
+  border-radius: 14px;
+  flex-direction: column;
   justify-content: center;
-  transition: opacity 150ms linear;
-  border: 1px solid ${({ theme }) => theme.colors.header_menu_color};
+  transition: background-color 200ms ease;
   background-color: ${({ theme }) => theme.colors.header_menu_color};
 
   @media only screen and (max-width: 1200px) {
     display: flex;
   }
 
-  &:active {
-    opacity: 0.8;
+  &:hover {
+    background-color: ${({ theme }) => theme.colors.light_green_color};
   }
+`;
+
+export const HeaderMenuBar = styled.span<{
+  $isOpenMenu: boolean;
+  $position: "top" | "middle" | "bottom";
+}>`
+  width: 22px;
+  height: 2px;
+  display: block;
+  border-radius: 2px;
+  background-color: ${({ theme }) => theme.colors.light};
+  transition: transform 260ms cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 180ms ease;
+
+  ${({ $position, $isOpenMenu }) => {
+    if (!$isOpenMenu) return "";
+    if ($position === "top") return "transform: translateY(7px) rotate(45deg);";
+    if ($position === "bottom") return "transform: translateY(-7px) rotate(-45deg);";
+    return "opacity: 0; transform: scaleX(0);";
+  }}
 `;
 
 export const HeaderMenuIcon = styled(Image)`
@@ -299,88 +320,63 @@ export const HeaderMenuIcon = styled(Image)`
   height: 20px;
 `;
 
-export const HeaderMenuOverlay = styled.div<{ $isOpen: boolean }>`
+export const HeaderMenu = styled.nav<{ $isOpenMenu: boolean }>`
   display: none;
 
   @media only screen and (max-width: 1200px) {
     top: 0;
     left: 0;
-    display: block;
     width: 100%;
     height: 100dvh;
-    position: fixed;
-    z-index: 99999998;
-    background-color: rgba(14, 25, 45, 0.55);
-    backdrop-filter: blur(2px);
-    -webkit-backdrop-filter: blur(2px);
-    opacity: ${({ $isOpen }) => ($isOpen ? 1 : 0)};
-    visibility: ${({ $isOpen }) => ($isOpen ? "visible" : "hidden")};
-    transition: opacity 200ms ease, visibility 200ms ease;
-  }
-`;
-
-export const HeaderMenu = styled.nav<{ $isOpenMenu: boolean }>`
-  display: none;
-
-  @media only screen and (max-width: 1200px) {
-    top: 100px;
-    left: 0;
-    right: 0;
-    width: 100%;
-    max-height: ${({ $isOpenMenu }) => ($isOpenMenu ? "50vh" : "0")};
     display: flex;
-    padding: 20px;
+    padding: 100px 32px 56px;
     position: fixed;
     z-index: 99999999;
-    overflow: hidden;
     overflow-y: auto;
+    align-items: center;
     flex-direction: column;
-    border-radius: 0 0 24px 24px;
-    box-shadow: 0 20px 40px rgba(14, 25, 45, 0.18);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.6);
-    background-color: rgba(255, 255, 255, 0.78);
-    backdrop-filter: blur(18px);
-    -webkit-backdrop-filter: blur(18px);
+    justify-content: center;
+    background: radial-gradient(
+      120% 120% at 50% -10%,
+      #1c2f52 0%,
+      ${({ theme }) => theme.colors.dark_blue} 55%,
+      #060b16 100%
+    );
     opacity: ${({ $isOpenMenu }) => ($isOpenMenu ? 1 : 0)};
     visibility: ${({ $isOpenMenu }) => ($isOpenMenu ? "visible" : "hidden")};
-    transition: max-height 260ms cubic-bezier(0.4, 0, 0.2, 1),
-      opacity 200ms ease;
-  }
-
-  @media only screen and (max-width: 768px) {
-    top: 80px;
-  }
-
-  @media only screen and (max-width: 480px) {
-    top: 70px;
+    transform: scale(${({ $isOpenMenu }) => ($isOpenMenu ? 1 : 0.97)});
+    transition: opacity 280ms ease, transform 280ms ease,
+      visibility 280ms ease;
+    pointer-events: ${({ $isOpenMenu }) => ($isOpenMenu ? "auto" : "none")};
   }
 `;
 
 export const HeaderMenuHead = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  margin-bottom: 16px;
+  top: 20px;
+  right: 20px;
+  position: absolute;
+
+  @media only screen and (max-width: 768px) {
+    top: 16px;
+    right: 16px;
+  }
 `;
 
 export const HeaderMenuCloseButton = styled.button`
-  width: 36px;
-  height: 36px;
+  width: 46px;
+  height: 46px;
   border: none;
   display: flex;
   cursor: pointer;
-  border-radius: 10px;
+  border-radius: 50%;
   align-items: center;
   justify-content: center;
-  transition: background-color 150ms linear;
-  background-color: rgba(14, 25, 45, 0.06);
-
-  img {
-    filter: brightness(0);
-  }
+  background-color: rgba(255, 255, 255, 0.08);
+  transition: background-color 200ms ease, transform 300ms ease;
 
   &:hover {
-    background-color: rgba(14, 25, 45, 0.12);
+    transform: rotate(90deg);
+    background-color: rgba(255, 255, 255, 0.16);
   }
 
   &:active {
@@ -390,30 +386,42 @@ export const HeaderMenuCloseButton = styled.button`
 
 export const HeaderMenuList = styled.ul`
   margin: 0;
-  gap: 8px;
+  gap: 6px;
   padding: 0;
   display: flex;
-  list-style: none;
   width: 100%;
+  max-width: 420px;
+  list-style: none;
   flex-direction: column;
 `;
 
-export const HeaderMenuItem = styled.li``;
+export const HeaderMenuItem = styled.li<{ $isOpenMenu: boolean; $index: number }>`
+  opacity: ${({ $isOpenMenu }) => ($isOpenMenu ? 1 : 0)};
+  transform: translateY(${({ $isOpenMenu }) => ($isOpenMenu ? "0" : "16px")});
+  transition: opacity 380ms ease, transform 380ms ease;
+  transition-delay: ${({ $isOpenMenu, $index }) =>
+    $isOpenMenu ? `${100 + $index * 60}ms` : "0ms"};
+`;
 
 export const HeaderMenuLink = styled.a<{ $isActive: boolean }>`
-  padding: 14px 16px;
   display: block;
-  font-size: 16px;
-  font-weight: 500;
-  border-radius: 12px;
-  transition: background-color 150ms linear, color 150ms linear;
-  background-color: ${({ $isActive }) =>
-    $isActive ? "rgba(73, 187, 189, 0.16)" : "transparent"};
+  width: 100%;
+  padding: 14px 20px;
+  font-size: 26px;
+  font-weight: 600;
+  text-align: center;
+  border-radius: 16px;
+  letter-spacing: 0.01em;
+  transition: background-color 150ms ease, color 150ms ease;
   color: ${({ $isActive, theme }) =>
-    $isActive ? theme.colors.light_green_color : theme.colors.directive_title_color};
+    $isActive ? theme.colors.light_green_color : theme.colors.light};
 
   &:hover {
-    background-color: ${({ $isActive }) =>
-      $isActive ? "rgba(73, 187, 189, 0.16)" : "rgba(14, 25, 45, 0.06)"};
+    background-color: rgba(255, 255, 255, 0.06);
+  }
+
+  @media only screen and (max-width: 480px) {
+    font-size: 21px;
+    padding: 12px 16px;
   }
 `;

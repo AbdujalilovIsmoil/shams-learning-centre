@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState, useEffect, useRef, useCallback } from "react";
 import { usePathname } from "next/navigation";
-import { MenuCloseIcon, MenuOpenIcon, SiteLogo } from "@/public/images/svg";
+import { MenuCloseIcon, SiteLogo } from "@/public/images/svg";
 import {
   RusLanguage,
   EnglishImage,
@@ -22,8 +22,8 @@ import {
   HeaderLink,
   FlagCircle,
   HeaderMenu,
+  HeaderMenuBar,
   HeaderMenuHead,
-  HeaderMenuOverlay,
   HeaderMenuCloseButton,
   HeaderWrapper,
   HeaderContact,
@@ -278,8 +278,6 @@ const Header = () => {
 
   return (
     <>
-      <HeaderMenuOverlay $isOpen={isMenuOpen} onClick={closeMenu} />
-
       <HeaderMenu $isOpenMenu={isMenuOpen}>
         <HeaderMenuHead>
           <HeaderMenuCloseButton
@@ -288,8 +286,8 @@ const Header = () => {
             aria-label="close menu"
           >
             <HeaderMenuIcon
-              width={16}
-              height={16}
+              width={18}
+              height={18}
               src={MenuCloseIcon}
               alt="close menu icon"
             />
@@ -297,8 +295,12 @@ const Header = () => {
         </HeaderMenuHead>
 
         <HeaderMenuList>
-          {sections.map((section: Section) => (
-            <HeaderMenuItem key={section.id}>
+          {sections.map((section: Section, index) => (
+            <HeaderMenuItem
+              key={section.id}
+              $isOpenMenu={isMenuOpen}
+              $index={index}
+            >
               <HeaderMenuLink
                 as={Link}
                 href={`/${language}#${section.id}`}
@@ -312,7 +314,7 @@ const Header = () => {
               </HeaderMenuLink>
             </HeaderMenuItem>
           ))}
-          <HeaderMenuItem>
+          <HeaderMenuItem $isOpenMenu={isMenuOpen} $index={sections.length}>
             <HeaderMenuLink
               as={Link}
               href={`/${language}/blog`}
@@ -394,13 +396,14 @@ const Header = () => {
                 {contactData[language]}
               </HeaderContactButton>
 
-              <HeaderMenuOpenContainer onClick={toggleMenu} role="button">
-                <HeaderMenuIcon
-                  width={20}
-                  height={20}
-                  src={isMenuOpen ? MenuCloseIcon : MenuOpenIcon}
-                  alt="menu open icon"
-                />
+              <HeaderMenuOpenContainer
+                type="button"
+                onClick={toggleMenu}
+                aria-label="toggle menu"
+              >
+                <HeaderMenuBar $isOpenMenu={isMenuOpen} $position="top" />
+                <HeaderMenuBar $isOpenMenu={isMenuOpen} $position="middle" />
+                <HeaderMenuBar $isOpenMenu={isMenuOpen} $position="bottom" />
               </HeaderMenuOpenContainer>
             </HeaderContact>
           </HeaderWrapper>
