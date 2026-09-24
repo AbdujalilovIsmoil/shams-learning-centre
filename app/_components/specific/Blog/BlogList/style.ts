@@ -235,6 +235,8 @@ export const FilterBarWrap = styled.div`
   border-radius: 18px;
   flex-direction: column;
   gap: 18px;
+  position: relative;
+  z-index: 25;
   background-color: ${({ theme }) => theme.colors.light};
   box-shadow: 0 4px 16px ${({ theme }) => theme.colors.swiper_slide_background_color};
 
