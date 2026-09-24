@@ -334,7 +334,10 @@ export const HeaderMenu = styled.nav<{ $isOpenMenu: boolean }>`
     overflow-y: auto;
     flex-direction: column;
     box-shadow: -8px 0 32px rgba(0, 0, 0, 0.25);
-    background-color: ${({ theme }) => theme.colors.dark_blue};
+    border-left: 1px solid rgba(255, 255, 255, 0.08);
+    background-color: rgba(14, 25, 45, 0.6);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
     transition: transform 220ms cubic-bezier(0.4, 0, 0.2, 1);
     transform: translateX(${({ $isOpenMenu }) => ($isOpenMenu ? "0" : "100%")});
   }
