@@ -71,6 +71,11 @@ interface BlogFilterText {
   resultsFound: string;
   noResults: string;
   noResultsHint: string;
+  datePickerPlaceholder: string;
+  datePickerToday: string;
+  datePickerClear: string;
+  months: string[];
+  weekdays: string[];
 }
 
 export const blogFilterText: Record<Language, BlogFilterText> = {
@@ -89,6 +94,14 @@ export const blogFilterText: Record<Language, BlogFilterText> = {
     resultsFound: "ta maqola topildi",
     noResults: "Hech qanday maqola topilmadi",
     noResultsHint: "Filtrlarni o‘zgartirib qayta urinib ko‘ring",
+    datePickerPlaceholder: "Sanani tanlang",
+    datePickerToday: "Bugun",
+    datePickerClear: "Bekor qilish",
+    months: [
+      "Yanvar", "Fevral", "Mart", "Aprel", "May", "Iyun",
+      "Iyul", "Avgust", "Sentabr", "Oktabr", "Noyabr", "Dekabr",
+    ],
+    weekdays: ["Du", "Se", "Ch", "Pa", "Ju", "Sh", "Ya"],
   },
   ru: {
     filterLabel: "Фильтр",
@@ -105,6 +118,14 @@ export const blogFilterText: Record<Language, BlogFilterText> = {
     resultsFound: "статей найдено",
     noResults: "Статьи не найдены",
     noResultsHint: "Попробуйте изменить параметры фильтра",
+    datePickerPlaceholder: "Выберите дату",
+    datePickerToday: "Сегодня",
+    datePickerClear: "Очистить",
+    months: [
+      "Январь", "Февраль", "Март", "Апрель", "Май", "Июнь",
+      "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь",
+    ],
+    weekdays: ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"],
   },
   en: {
     filterLabel: "Filters",
@@ -121,6 +142,14 @@ export const blogFilterText: Record<Language, BlogFilterText> = {
     resultsFound: "articles found",
     noResults: "No articles found",
     noResultsHint: "Try adjusting the filters and search again",
+    datePickerPlaceholder: "Select date",
+    datePickerToday: "Today",
+    datePickerClear: "Clear",
+    months: [
+      "January", "February", "March", "April", "May", "June",
+      "July", "August", "September", "October", "November", "December",
+    ],
+    weekdays: ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"],
   },
   ar: {
     filterLabel: "تصفية",
@@ -137,6 +166,14 @@ export const blogFilterText: Record<Language, BlogFilterText> = {
     resultsFound: "مقالة موجودة",
     noResults: "لم يتم العثور على مقالات",
     noResultsHint: "حاول تغيير عوامل التصفية والمحاولة مرة أخرى",
+    datePickerPlaceholder: "اختر التاريخ",
+    datePickerToday: "اليوم",
+    datePickerClear: "مسح",
+    months: [
+      "يناير", "فبراير", "مارس", "أبريل", "مايو", "يونيو",
+      "يوليو", "أغسطس", "سبتمبر", "أكتوبر", "نوفمبر", "ديسمبر",
+    ],
+    weekdays: ["إث", "ثل", "أر", "خم", "جم", "سب", "أح"],
   },
 };
 

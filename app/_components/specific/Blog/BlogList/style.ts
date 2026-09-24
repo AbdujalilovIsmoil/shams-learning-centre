@@ -426,24 +426,164 @@ export const DateFieldIcon = styled(Image)`
   opacity: 0.65;
 `;
 
-export const DateFieldInput = styled.input`
+export const DateFieldTrigger = styled.button`
+  display: flex;
   width: 100%;
+  gap: 10px;
+  align-items: center;
+  background: none;
   border: none;
-  outline: none;
+  padding: 0;
+  cursor: pointer;
+  font-family: inherit;
+  text-align: left;
+`;
+
+export const DateFieldTriggerText = styled.span<{ $isPlaceholder: boolean }>`
   font-size: 14px;
   font-weight: 500;
-  font-family: inherit;
-  background-color: transparent;
-  color: ${({ theme }) => theme.colors.directive_title_color};
+  color: ${({ $isPlaceholder, theme }) =>
+    $isPlaceholder ? theme.colors.thin_gray : theme.colors.directive_title_color};
+`;
 
-  &::-webkit-calendar-picker-indicator {
-    cursor: pointer;
-    opacity: 0.55;
-    transition: opacity 0.2s ease-in-out;
+export const DatePickerRoot = styled.div`
+  position: relative;
+`;
+
+export const DatePickerPopover = styled.div<{ $isOpen: boolean }>`
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  z-index: 30;
+  width: 280px;
+  padding: 14px;
+  border-radius: 14px;
+  opacity: ${({ $isOpen }) => ($isOpen ? 1 : 0)};
+  visibility: ${({ $isOpen }) => ($isOpen ? "visible" : "hidden")};
+  transform: translateY(${({ $isOpen }) => ($isOpen ? 0 : "-8px")});
+  transition: all 0.18s ease-in-out;
+  background-color: ${({ theme }) => theme.colors.light};
+  box-shadow: 0 16px 32px ${({ theme }) => theme.colors.header_container_box_shadow};
+  border: 1px solid ${({ theme }) => theme.colors.language_option_color};
+
+  @media (max-width: 480px) {
+    left: auto;
+    right: 0;
+  }
+`;
+
+export const DatePickerHeader = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+`;
+
+export const DatePickerTitle = styled.span`
+  font-size: 14px;
+  font-weight: 600;
+  color: ${({ theme }) => theme.colors.directive_title_color};
+`;
+
+export const DatePickerNav = styled.button`
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  color: ${({ theme }) => theme.colors.directive_title_color};
+  background-color: ${({ theme }) => theme.colors.premium_course_section_color};
+
+  &:hover {
+    background-color: ${({ theme }) => theme.colors.language_option_color};
   }
 
-  &::-webkit-calendar-picker-indicator:hover {
-    opacity: 1;
+  svg {
+    width: 16px;
+    height: 16px;
+  }
+`;
+
+export const DatePickerWeekdays = styled.div`
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  margin-bottom: 4px;
+
+  span {
+    font-size: 11px;
+    font-weight: 600;
+    text-align: center;
+    color: ${({ theme }) => theme.colors.thin_gray};
+  }
+`;
+
+export const DatePickerGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
+`;
+
+export const DatePickerCell = styled.button<{
+  $muted?: boolean;
+  $selected?: boolean;
+  $today?: boolean;
+  $disabled?: boolean;
+}>`
+  width: 100%;
+  aspect-ratio: 1;
+  border: none;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: ${({ $disabled }) => ($disabled ? "not-allowed" : "pointer")};
+  background-color: ${({ $selected, theme }) =>
+    $selected ? theme.colors.light_green_color : "transparent"};
+  color: ${({ $muted, $selected, $disabled, theme }) => {
+    if ($selected) return theme.colors.light;
+    if ($disabled) return theme.colors.language_option_color;
+    if ($muted) return theme.colors.thin_gray;
+    return theme.colors.directive_title_color;
+  }};
+  opacity: ${({ $muted, $disabled }) => ($muted || $disabled ? 0.5 : 1)};
+  box-shadow: ${({ $today, $selected, theme }) =>
+    $today && !$selected ? `inset 0 0 0 1.5px ${theme.colors.light_green_color}` : "none"};
+
+  &:hover {
+    background-color: ${({ $selected, $disabled, theme }) =>
+      $disabled ? "transparent" : $selected ? theme.colors.light_green_color : theme.colors.premium_course_section_color};
+  }
+`;
+
+export const DatePickerFooter = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid ${({ theme }) => theme.colors.language_option_color};
+`;
+
+export const DatePickerFooterBtn = styled.button`
+  font-size: 13px;
+  font-weight: 600;
+  border: none;
+  background: none;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 8px;
+  color: ${({ theme }) => theme.colors.price_link_color};
+
+  &:hover {
+    background-color: ${({ theme }) => theme.colors.premium_course_section_color};
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.4;
   }
 `;
 

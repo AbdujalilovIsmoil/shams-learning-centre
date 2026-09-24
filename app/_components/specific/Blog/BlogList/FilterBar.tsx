@@ -1,15 +1,12 @@
 "use client";
 
-import { CalendarIcon } from "@/public/images/svg";
 import CustomSelect, { type SelectOptionType } from "./CustomSelect";
+import CustomDatePicker from "./CustomDatePicker";
 import {
   FilterBarWrap,
   FilterGroup,
   DateField,
   DateFieldLabel,
-  DateFieldInputWrap,
-  DateFieldIcon,
-  DateFieldInput,
   ResetButton,
   ResultsBar,
   ResultsCount,
@@ -22,6 +19,11 @@ interface FilterBarText {
   dateToLabel: string;
   reset: string;
   resultsFound: string;
+  datePickerPlaceholder: string;
+  datePickerToday: string;
+  datePickerClear: string;
+  months: string[];
+  weekdays: string[];
 }
 
 interface FilterBarProps {
@@ -76,38 +78,22 @@ const FilterBar = ({
 
         <DateField>
           <DateFieldLabel>{text.dateFromLabel}</DateFieldLabel>
-          <DateFieldInputWrap>
-            <DateFieldIcon
-              width={18}
-              height={18}
-              src={CalendarIcon}
-              alt="calendar icon"
-            />
-            <DateFieldInput
-              type="date"
-              value={dateFrom}
-              max={dateTo || undefined}
-              onChange={(event) => onDateFromChange(event.target.value)}
-            />
-          </DateFieldInputWrap>
+          <CustomDatePicker
+            value={dateFrom}
+            onChange={onDateFromChange}
+            text={text}
+            max={dateTo || undefined}
+          />
         </DateField>
 
         <DateField>
           <DateFieldLabel>{text.dateToLabel}</DateFieldLabel>
-          <DateFieldInputWrap>
-            <DateFieldIcon
-              width={18}
-              height={18}
-              src={CalendarIcon}
-              alt="calendar icon"
-            />
-            <DateFieldInput
-              type="date"
-              value={dateTo}
-              min={dateFrom || undefined}
-              onChange={(event) => onDateToChange(event.target.value)}
-            />
-          </DateFieldInputWrap>
+          <CustomDatePicker
+            value={dateTo}
+            onChange={onDateToChange}
+            text={text}
+            min={dateFrom || undefined}
+          />
         </DateField>
 
         {isFiltered && (
