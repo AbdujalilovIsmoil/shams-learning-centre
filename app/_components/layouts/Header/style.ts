@@ -336,7 +336,7 @@ export const HeaderMenu = styled.nav<{ $isOpenMenu: boolean }>`
     align-items: center;
     flex-direction: column;
     justify-content: center;
-    background-color: rgba(255, 255, 255, 0.82);
+    background-color: rgba(255, 255, 255, 0.3);
     backdrop-filter: blur(22px);
     -webkit-backdrop-filter: blur(22px);
     opacity: ${({ $isOpenMenu }) => ($isOpenMenu ? 1 : 0)};
