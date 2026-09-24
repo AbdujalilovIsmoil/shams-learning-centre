@@ -12,6 +12,7 @@ import {
   type BlogPost,
 } from "../api";
 import { CarouselArrowLeftIcon } from "@/public/images/svg";
+import BlogDetailCoverCarousel from "./BlogDetailCoverCarousel";
 import {
   BlogDetailBack,
   BlogDetailBackIcon,
@@ -134,6 +135,15 @@ const BlogDetail = () => {
             </span>
           </BlogDetailMeta>
         </BlogDetailHeader>
+
+        {post.images?.length > 0 && (
+          <div data-aos="fade-up">
+            <BlogDetailCoverCarousel
+              images={post.images}
+              alt={post.title[language]}
+            />
+          </div>
+        )}
 
         <BlogDetailContent data-aos="fade-up">
           <BlogDetailRichContent

@@ -120,6 +120,22 @@ export const BlogDetailCover = styled.div`
   }
 `;
 
+export const BlogDetailCoverTrack = styled.div<{ $index: number; $count: number }>`
+  height: 100%;
+  display: flex;
+  transition: transform 0.5s ease;
+  width: ${({ $count }) => $count * 100}%;
+  transform: ${({ $index, $count }) =>
+    `translateX(-${(100 / $count) * $index}%)`};
+`;
+
+export const BlogDetailCoverSlide = styled.div<{ $count: number }>`
+  height: 100%;
+  flex-shrink: 0;
+  position: relative;
+  width: ${({ $count }) => 100 / $count}%;
+`;
+
 export const BlogDetailCoverImage = styled.img`
   position: absolute;
   inset: 0;
@@ -127,6 +143,73 @@ export const BlogDetailCoverImage = styled.img`
   height: 100%;
   display: block;
   object-fit: cover;
+`;
+
+export const BlogDetailCoverNav = styled.button`
+  top: 50%;
+  z-index: 3;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  cursor: pointer;
+  border: none;
+  border-radius: 50%;
+  align-items: center;
+  position: absolute;
+  justify-content: center;
+  transform: translateY(-50%);
+  transition: background-color 0.2s ease, opacity 0.2s ease;
+  background-color: rgba(15, 23, 42, 0.45);
+  backdrop-filter: blur(2px);
+
+  &:hover {
+    background-color: rgba(15, 23, 42, 0.65);
+  }
+
+  &.blog-detail-cover-prev {
+    left: 16px;
+  }
+
+  &.blog-detail-cover-next {
+    right: 16px;
+  }
+
+  @media (max-width: 768px) {
+    width: 36px;
+    height: 36px;
+  }
+`;
+
+export const BlogDetailCoverNavIcon = styled(Image)`
+  width: 18px;
+  height: 18px;
+
+  @media (max-width: 480px) {
+    width: 14px;
+    height: 14px;
+  }
+`;
+
+export const BlogDetailCoverDots = styled.div`
+  left: 0;
+  right: 0;
+  bottom: 16px;
+  z-index: 3;
+  gap: 6px;
+  display: flex;
+  position: absolute;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const BlogDetailCoverDot = styled.span<{ $active?: boolean }>`
+  width: ${({ $active }) => ($active ? "22px" : "8px")};
+  height: 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background-color: ${({ $active }) =>
+    $active ? "#fff" : "rgba(255, 255, 255, 0.55)"};
 `;
 
 export const BlogDetailContent = styled.div`
