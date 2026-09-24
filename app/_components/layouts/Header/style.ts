@@ -336,12 +336,9 @@ export const HeaderMenu = styled.nav<{ $isOpenMenu: boolean }>`
     align-items: center;
     flex-direction: column;
     justify-content: center;
-    background: radial-gradient(
-      120% 120% at 50% -10%,
-      #1c2f52 0%,
-      ${({ theme }) => theme.colors.dark_blue} 55%,
-      #060b16 100%
-    );
+    background-color: rgba(255, 255, 255, 0.82);
+    backdrop-filter: blur(22px);
+    -webkit-backdrop-filter: blur(22px);
     opacity: ${({ $isOpenMenu }) => ($isOpenMenu ? 1 : 0)};
     visibility: ${({ $isOpenMenu }) => ($isOpenMenu ? "visible" : "hidden")};
     transform: scale(${({ $isOpenMenu }) => ($isOpenMenu ? 1 : 0.97)});
@@ -371,12 +368,16 @@ export const HeaderMenuCloseButton = styled.button`
   border-radius: 50%;
   align-items: center;
   justify-content: center;
-  background-color: rgba(255, 255, 255, 0.08);
+  background-color: rgba(14, 25, 45, 0.06);
   transition: background-color 200ms ease, transform 300ms ease;
+
+  img {
+    filter: brightness(0);
+  }
 
   &:hover {
     transform: rotate(90deg);
-    background-color: rgba(255, 255, 255, 0.16);
+    background-color: rgba(14, 25, 45, 0.12);
   }
 
   &:active {
@@ -410,14 +411,13 @@ export const HeaderMenuLink = styled.a<{ $isActive: boolean }>`
   font-size: 26px;
   font-weight: 600;
   text-align: center;
-  border-radius: 16px;
   letter-spacing: 0.01em;
-  transition: background-color 150ms ease, color 150ms ease;
+  transition: color 150ms ease;
   color: ${({ $isActive, theme }) =>
-    $isActive ? theme.colors.light_green_color : theme.colors.light};
+    $isActive ? theme.colors.light_green_color : theme.colors.directive_title_color};
 
   &:hover {
-    background-color: rgba(255, 255, 255, 0.06);
+    color: ${({ theme }) => theme.colors.light_green_color};
   }
 
   @media only screen and (max-width: 480px) {
