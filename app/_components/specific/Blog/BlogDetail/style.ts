@@ -100,7 +100,7 @@ export const BlogDetailCover = styled.div`
   width: 100%;
   height: 480px;
   overflow: hidden;
-  max-width: 1100px;
+  max-width: 820px;
   position: relative;
   margin: 0 auto 50px auto;
   border-radius: 24px;
