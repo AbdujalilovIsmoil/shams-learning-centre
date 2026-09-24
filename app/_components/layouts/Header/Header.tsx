@@ -22,6 +22,9 @@ import {
   HeaderLink,
   FlagCircle,
   HeaderMenu,
+  HeaderMenuHead,
+  HeaderMenuOverlay,
+  HeaderMenuCloseButton,
   HeaderWrapper,
   HeaderContact,
   HeaderMenuLink,
@@ -94,13 +97,34 @@ const languages = [
 const Header = () => {
   const router = useRouter();
   const pathName = usePathname();
-  const [isOpenMenu, setIsOpenMenu] = useState<boolean>(true);
+  const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
   const language = (pathName.split("/")[1] || "uz") as Language;
   const [activeSection, setActiveSection] = useState("home");
 
-  const toggleOpenMenu = () => {
-    setIsOpenMenu((prevOpenMenuState) => !prevOpenMenuState);
+  const toggleMenu = () => {
+    setIsMenuOpen((prev) => !prev);
   };
+
+  const closeMenu = () => {
+    setIsMenuOpen(false);
+  };
+
+  useEffect(() => {
+    if (!isMenuOpen) return;
+
+    const onEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") closeMenu();
+    };
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    document.addEventListener("keydown", onEscape);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      document.removeEventListener("keydown", onEscape);
+    };
+  }, [isMenuOpen]);
 
   const lastSentRef = useRef(activeSection);
 
@@ -254,16 +278,34 @@ const Header = () => {
 
   return (
     <>
-      <HeaderMenu $isOpenMenu={isOpenMenu && isOpenMenu}>
+      <HeaderMenuOverlay $isOpen={isMenuOpen} onClick={closeMenu} />
+
+      <HeaderMenu $isOpenMenu={isMenuOpen}>
+        <HeaderMenuHead>
+          <HeaderMenuCloseButton
+            type="button"
+            onClick={closeMenu}
+            aria-label="close menu"
+          >
+            <HeaderMenuIcon
+              width={16}
+              height={16}
+              src={MenuCloseIcon}
+              alt="close menu icon"
+            />
+          </HeaderMenuCloseButton>
+        </HeaderMenuHead>
+
         <HeaderMenuList>
           {sections.map((section: Section) => (
             <HeaderMenuItem key={section.id}>
               <HeaderMenuLink
                 as={Link}
                 href={`/${language}#${section.id}`}
-                onClick={() =>
-                  isHomePage && handleSectionSelect(section.id, true)
-                }
+                onClick={() => {
+                  if (isHomePage) handleSectionSelect(section.id, true);
+                  closeMenu();
+                }}
                 $isActive={isHomePage && activeSection === section.id}
               >
                 {section.label[language]}
@@ -274,6 +316,7 @@ const Header = () => {
             <HeaderMenuLink
               as={Link}
               href={`/${language}/blog`}
+              onClick={closeMenu}
               $isActive={isBlogActive}
             >
               {blogLabel[language]}
@@ -351,11 +394,11 @@ const Header = () => {
                 {contactData[language]}
               </HeaderContactButton>
 
-              <HeaderMenuOpenContainer onClick={toggleOpenMenu} role="button">
+              <HeaderMenuOpenContainer onClick={toggleMenu} role="button">
                 <HeaderMenuIcon
                   width={20}
                   height={20}
-                  src={isOpenMenu ? MenuOpenIcon : MenuCloseIcon}
+                  src={isMenuOpen ? MenuCloseIcon : MenuOpenIcon}
                   alt="menu open icon"
                 />
               </HeaderMenuOpenContainer>

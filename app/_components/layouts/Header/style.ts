@@ -299,40 +299,78 @@ export const HeaderMenuIcon = styled(Image)`
   height: 20px;
 `;
 
-export const HeaderMenu = styled.nav<{ $isOpenMenu: boolean }>`
-  top: 100px;
-  left: -100%;
-  width: 100%;
-  display: flex;
+export const HeaderMenuOverlay = styled.div<{ $isOpen: boolean }>`
   display: none;
-  padding: 15px;
-  position: fixed;
-  z-index: 100000000;
-  text-align: center;
-  align-items: center;
-  justify-content: flex-end;
-  backdrop-filter: blur(10px);
-  transition: left 150ms linear;
-  -webkit-backdrop-filter: blur(10px);
-  background-color: ${({ theme }) => theme.colors.flag_circle_box_shadow};
 
   @media only screen and (max-width: 1200px) {
+    top: 0;
+    left: 0;
+    display: block;
+    width: 100%;
+    height: 100dvh;
+    position: fixed;
+    z-index: 99999998;
+    background-color: rgba(14, 25, 45, 0.55);
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+    opacity: ${({ $isOpen }) => ($isOpen ? 1 : 0)};
+    visibility: ${({ $isOpen }) => ($isOpen ? "visible" : "hidden")};
+    transition: opacity 200ms ease, visibility 200ms ease;
+  }
+`;
+
+export const HeaderMenu = styled.nav<{ $isOpenMenu: boolean }>`
+  display: none;
+
+  @media only screen and (max-width: 1200px) {
+    top: 0;
+    right: 0;
+    width: min(320px, 84vw);
+    height: 100dvh;
     display: flex;
-    left: ${({ $isOpenMenu }) => ($isOpenMenu ? "-100%" : 0)};
+    padding: 24px 20px;
+    position: fixed;
+    z-index: 99999999;
+    overflow-y: auto;
+    flex-direction: column;
+    box-shadow: -8px 0 32px rgba(0, 0, 0, 0.25);
+    background-color: ${({ theme }) => theme.colors.dark_blue};
+    transition: transform 220ms cubic-bezier(0.4, 0, 0.2, 1);
+    transform: translateX(${({ $isOpenMenu }) => ($isOpenMenu ? "0" : "100%")});
+  }
+`;
+
+export const HeaderMenuHead = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-bottom: 24px;
+`;
+
+export const HeaderMenuCloseButton = styled.button`
+  width: 40px;
+  height: 40px;
+  border: none;
+  display: flex;
+  cursor: pointer;
+  border-radius: 12px;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 150ms linear;
+  background-color: rgba(255, 255, 255, 0.08);
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.16);
   }
 
-  @media only screen and (max-width: 768px) {
-    top: 80px;
-  }
-
-  @media only screen and (max-width: 480px) {
-    top: 70px;
+  &:active {
+    opacity: 0.8;
   }
 `;
 
 export const HeaderMenuList = styled.ul`
   margin: 0;
-  gap: 18px;
+  gap: 8px;
   padding: 0;
   display: flex;
   list-style: none;
@@ -343,12 +381,19 @@ export const HeaderMenuList = styled.ul`
 export const HeaderMenuItem = styled.li``;
 
 export const HeaderMenuLink = styled.a<{ $isActive: boolean }>`
-  padding: 10px;
+  padding: 14px 16px;
   display: block;
-  border-radius: 10px;
-  background-color: ${({ theme }) => theme.colors.light};
+  font-size: 16px;
+  font-weight: 500;
+  border-radius: 12px;
+  transition: background-color 150ms linear, color 150ms linear;
+  background-color: ${({ $isActive }) =>
+    $isActive ? "rgba(73, 187, 189, 0.14)" : "transparent"};
   color: ${({ $isActive, theme }) =>
-    $isActive
-      ? theme.colors.light_green_color
-      : theme.colors.chevron_icon_color};
+    $isActive ? theme.colors.light_green_color : theme.colors.light};
+
+  &:hover {
+    background-color: ${({ $isActive }) =>
+      $isActive ? "rgba(73, 187, 189, 0.14)" : "rgba(255, 255, 255, 0.08)"};
+  }
 `;
