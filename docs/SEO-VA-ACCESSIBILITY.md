@@ -19,7 +19,7 @@ sizdan qanday ma'lumotlar kerak.
 3. **Google Search Console** (https://search.google.com/search-console):
    1. "Add property" → **Domain** → `shamsoquvmarkaz.uz` → DNS'ga TXT yozuvi qo'shing (eng ishonchli).
       Yoki **URL prefix** → HTML-tag usuli: berilgan kodni `index.html` dagi
-      `<meta name="google-site-verification" content="...">` qatoriga qo'ying (izoh ichida tayyor turibdi).
+      `<meta name="google-site-verification" content="...">` qatoriga qo'ying (**`index.html` ga qo'yilgan**, har bir sahifa qobig'iga tushadi).
    2. **Sitemaps** → `sitemap.xml` ni yuboring.
    3. **URL Inspection** → `https://www.shamsoquvmarkaz.uz/uz` ni kiriting → *Test Live URL* →
       *Request Indexing*. Shuni `/ru`, `/en`, `/ar`, `/uz/blog` uchun ham qiling.
@@ -68,7 +68,7 @@ maqola nashr qilinganda shu URL'ga `POST` yuboring.
 - **1200×630 o'lchamli og-image** (logotip + slogan). Hozir 512×512 `icon.png` ishlatiladi; Telegram
   va Facebook katta rasm bilan ancha yaxshi ko'rsatadi. Rasmni `public/og-image.png` ga qo'ying va
   `src/seo/meta.ts` dagi `absoluteUrl("/icon.png")` o'rniga `/og-image.png` yozing.
-- **Search Console tasdiqlash kodi** (yuqoridagi 3-qadam).
+- ~~Search Console tasdiqlash kodi~~ — qo'yilgan (`index.html`).
 - Tarjimalarni (ru/en/ar title va description) o'zingiz yoki ona tilida so'zlashuvchi tekshirib chiqing.
 
 ### Bilib qo'ying
