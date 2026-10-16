@@ -15,7 +15,7 @@
 
 🛠 Technologies Used:
 
-React & NextJs 📄
+React + Vite + React Router 📄
 
 Styled Component 🎨
 
@@ -24,3 +24,6 @@ TyoeScruot ⚡
 React Libraries 📦
 
 🚀 This website provides an interactive and user-friendly experience!
+
+
+📖 SEO (Google) va accessibility bo'yicha to'liq qo'llanma: [docs/SEO-VA-ACCESSIBILITY.md](docs/SEO-VA-ACCESSIBILITY.md)

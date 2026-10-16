@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="uz" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#49bbbd" />
+
+    <!--
+      Title, description, canonical, hreflang, Open Graph, Twitter va JSON-LD bu yerga
+      build vaqtida plugins/seoPages.ts tomonidan qo'yiladi (har bir til va sahifa
+      uchun alohida), brauzerda esa src/seo/useSeo.ts yangilab turadi.
+      Ma'lumotlar: src/seo/meta.ts
+    -->
+    <!--seo-head-->
+
+    <!--
+      Google Search Console tasdiqlash kodi (DNS orqali tasdiqlasangiz kerak emas):
+      <meta name="google-site-verification" content="SIZNING_KODINGIZ" />
+    -->
+
+    <link rel="icon" href="/icon.png" sizes="512x512" type="image/png" />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="apple-touch-icon" href="/apple-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://api.shamsoquvmarkaz.uz" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
+    />
+    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  </body>
+</html>

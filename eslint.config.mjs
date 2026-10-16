@@ -1,34 +1,20 @@
-import { dirname } from "path";
-import { fileURLToPath } from "url";
-import { FlatCompat } from "@eslint/eslintrc";
+import js from "@eslint/js";
+import globals from "globals";
+import tseslint from "typescript-eslint";
+import reactHooks from "eslint-plugin-react-hooks";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-
-const compat = new FlatCompat({
-  baseDirectory: __dirname,
-});
-
-const eslintConfig = [
+export default tseslint.config(
+  { ignores: ["node_modules/**", "dist/**"] },
   {
-    ignores: [
-      "node_modules/**",
-      ".next/**",
-      "out/**",
-      "build/**",
-      "next-env.d.ts",
-      "backend/**",
-      "admin-panel/**",
-    ],
-  },
-  ...compat.extends("next/core-web-vitals", "next/typescript"),
-  {
+    files: ["**/*.{ts,tsx}"],
+    extends: [js.configs.recommended, ...tseslint.configs.recommended],
+    languageOptions: { globals: globals.browser },
+    plugins: { "react-hooks": reactHooks },
     rules: {
-      "react/no-unescaped-entities": "off",
+      ...reactHooks.configs.recommended.rules,
       "@typescript-eslint/no-explicit-any": "off",
+      "@typescript-eslint/no-unused-vars": ["error", { varsIgnorePattern: "^_", ignoreRestSiblings: true }],
       "@typescript-eslint/no-empty-object-type": "off",
     },
-  },
-];
-
-export default eslintConfig;
+  }
+);
