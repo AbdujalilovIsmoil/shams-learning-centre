@@ -3,9 +3,12 @@ import Link from "@/lib/Link";
 import Image from "@/lib/Image";
 import styled, { keyframes } from "styled-components";
 
+// Bo'limlar orasidagi vertikal oraliq saytdagi boshqa bo'limlar (Savollar, Fikrlar,
+// Xarita...) bilan bir xil shkala bo'yicha: 120 / 100 / 80 / 60px. Pastki oraliqni
+// keyingi bo'limning yuqori padding'i beradi, shuning uchun bu yerda padding-bottom va
+// margin-bottom yo'q (aks holda oraliq ikki baravar bo'lib ketadi).
 export const BlogHomeSection = styled.section`
-  padding: 60px 0;
-  margin-bottom: 80px;
+  padding: 120px 0 0;
   scroll-margin-top: 100px;
 
   .swiper {
@@ -20,14 +23,16 @@ export const BlogHomeSection = styled.section`
     display: flex;
   }
 
+  @media (max-width: 1500px) {
+    padding-top: 100px;
+  }
+
   @media (max-width: 768px) {
-    padding: 40px 0;
-    margin-bottom: 60px;
+    padding-top: 80px;
   }
 
   @media (max-width: 480px) {
-    padding: 30px 0;
-    margin-bottom: 40px;
+    padding-top: 60px;
   }
 `;
 
